@@ -37,7 +37,18 @@ public class MysqlConnector {
         return 0;
     }
 
-    public String getNombreDocente(int )
+    public String getNombreDocente(int num_emp){
+        String consulta="select nomb from docentes where num_emp="+num_emp;
+        try{
+            ResultSet rs=connection.prepareCall(consulta).executeQuery();
+            while(rs.next()){
+                return rs.getString(1);
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
 
 
 
