@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,14 +13,10 @@ public class Materias extends Application{
     private  int n=10;
     @Override
     public void start(Stage stage) {
-
         AnchorPane anchor= new AnchorPane();
-        AnchorPane topin = new AnchorPane();
         anchor.setPrefSize(720,480);
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
-
-        HBox centrin = new HBox();
         GridPane grid = new GridPane();
         AnchorPane.setBottomAnchor(borderPane, 0.0);
         AnchorPane.setLeftAnchor(borderPane, 0.0);
@@ -27,6 +24,7 @@ public class Materias extends Application{
         AnchorPane.setTopAnchor(borderPane, 0.0);
         anchor.getChildren().add(borderPane);
         borderPane.setCenter(grid);
+        grid.setPadding(new Insets(0, 5, 5, 5));
         anchor.setPrefSize(720,480);
         ImageView sep = new ImageView("/Imagenes/header.png");
         topima.setSpacing(15);
@@ -36,8 +34,6 @@ public class Materias extends Application{
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
-        //topima.getChildren().add(tec);
-        //topima.getChildren().add(estado);
         topima.setAlignment(Pos.CENTER);
         sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
@@ -45,6 +41,8 @@ public class Materias extends Application{
                 int columna = i % 3;
                 int fila = i / 3;
                 Button btn = new Button(fila+"/"+columna);
+                btn.setStyle("-fx-background-color: #ffffff;" +
+                    "-fx-border-color: #00000077; -fx-border-width: 1");
                 btn.prefHeightProperty().bind(grid.heightProperty().divide(n < 3 ? 1 : n/3));
                 btn.prefWidthProperty().bind(grid.widthProperty().divide(n < 3 ? n : 3));
                 GridPane.setConstraints(btn, columna, fila);
