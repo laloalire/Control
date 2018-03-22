@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2018 at 02:27 AM
+-- Generation Time: Mar 22, 2018 at 04:52 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -26,8 +26,8 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (`num` INT)  BEGIN
-	select nomb nombre from asignaturas where num_emp = num;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BEGIN
+	select asig_id, nomb nombre from asignaturas where num_emp = num;
 END$$
 
 DELIMITER ;

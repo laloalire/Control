@@ -2,6 +2,7 @@ package sample;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MysqlConnector {
 
@@ -18,15 +19,15 @@ public class MysqlConnector {
         }
     }
 
-    public ArrayList<String> pedirMaterias(String num_empleado){
+    public Map<String, String> pedirMaterias(String num_empleado){
         String consulta="call materiasDocente("+num_empleado+")";
         ResultSet rs;
-        ArrayList<String> materias = new ArrayList<>();
+        Map<String, String> materias = new HashMap<>();
         try{
         CallableStatement st=connection.prepareCall(consulta);
         rs=st.executeQuery();
         while(rs.next()){
-            materias.add(rs.getString(1));
+            materias.put(rs.getString(1), rs.getString(2));
         }
         }
         catch(Exception e){

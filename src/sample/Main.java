@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 public class Main extends Application {
@@ -55,7 +56,7 @@ public class Main extends Application {
             }
             try {
                 MysqlConnector sql=new MysqlConnector();
-                ArrayList<String> materias = sql.pedirMaterias(numEmp.get());
+                Map<String, String> materias = sql.pedirMaterias(numEmp.get());
                 sql.shutdown();
                 if(materias.size() == 0) {
                     new Alert(Alert.AlertType.ERROR, "Numero de empleado no valido").show();

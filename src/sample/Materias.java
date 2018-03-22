@@ -10,11 +10,12 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Materias extends Application{
     private  int numMaterias;
-    private ArrayList<String> materias;
-    public Materias(ArrayList<String> materias) {
+    private Map<String, String> materias;
+    public Materias(Map<String, String> materias) {
         this.materias = materias;
         this.numMaterias = materias.size();
     }
@@ -50,7 +51,7 @@ public class Materias extends Application{
         for(int i = 0; i < numMaterias; i ++){
                 int columna = i % 3;
                 int fila = i / 3;
-                Button btn = new Button(materias.get(i));
+                Button btn = new Button(materias.values().toArray()[i] + "");
                 btn.getStyleClass().add("btnMateria");
                 btn.prefHeightProperty().bind(grid.heightProperty().divide(numMaterias < 3 ? 1 : numMaterias /3));
                 btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
