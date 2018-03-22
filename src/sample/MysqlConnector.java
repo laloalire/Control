@@ -1,8 +1,7 @@
 package sample;
 import java.sql.*;
-
-import java.util.List ;
-import java.util.ArrayList ;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MysqlConnector {
 
@@ -10,8 +9,7 @@ public class MysqlConnector {
     private Connection connection;
 
     public MysqlConnector() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        connection = DriverManager.getConnection("localhost/escuela", "root", "");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost/escuela?user=root");
     }
 
     public void shutdown() throws SQLException {
@@ -20,21 +18,21 @@ public class MysqlConnector {
         }
     }
 
-    public int checarDocente(int num_empleado){
-        String consulta="call CheckDocente("+num_empleado+")";
+    public ArrayList<String> pedirMaterias(String num_empleado){
+        String consulta="call materiasDocente("+num_empleado+")";
         ResultSet rs;
-
+        ArrayList<String> materias = new ArrayList<>();
         try{
         CallableStatement st=connection.prepareCall(consulta);
         rs=st.executeQuery();
         while(rs.next()){
-            return rs.getInt(1);
+            materias.add(rs.getString(1));
         }
         }
         catch(Exception e){
 
         }
-        return 0;
+        return materias;
     }
 
     public String getNombreDocente(int num_emp){

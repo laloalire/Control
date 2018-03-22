@@ -10,3 +10,15 @@
     -fx-image-repeat: no-repeat;
     -fx-image-position: center;
 }
+
+.btnMateria {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #00000077;
+    -fx-border-width: 1
+}
+.btnMateria:hover {
+    -fx-background-color: #e2e2e2;
+}
+.btnMateria:pressed {
+    -fx-background-color: #f1f1f1;
+}

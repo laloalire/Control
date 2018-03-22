@@ -9,11 +9,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class Materias extends Application{
-    private  int n=10;
+    private  int numMaterias;
+    private ArrayList<String> materias;
+    public Materias(ArrayList<String> materias) {
+        this.materias = materias;
+        this.numMaterias = materias.size();
+    }
+
     @Override
     public void start(Stage stage) {
         AnchorPane anchor= new AnchorPane();
+        anchor.getStylesheets().add("thisnuts.css");
         anchor.setPrefSize(720,480);
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
@@ -23,9 +32,10 @@ public class Materias extends Application{
         AnchorPane.setRightAnchor(borderPane, 0.0);
         AnchorPane.setTopAnchor(borderPane, 0.0);
         anchor.getChildren().add(borderPane);
+        BorderPane.setAlignment(grid, Pos.CENTER);
         borderPane.setCenter(grid);
         grid.setPadding(new Insets(0, 5, 5, 5));
-        anchor.setPrefSize(720,480);
+        anchor.setPrefSize(stage.getWidth(),stage.getHeight());
         ImageView sep = new ImageView("/Imagenes/header.png");
         topima.setSpacing(15);
         topima.setStyle("-fx-background-color: #ffffff;");
@@ -37,14 +47,13 @@ public class Materias extends Application{
         topima.setAlignment(Pos.CENTER);
         sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
-        for(int i =0; i < n;i ++){
+        for(int i = 0; i < numMaterias; i ++){
                 int columna = i % 3;
                 int fila = i / 3;
-                Button btn = new Button(fila+"/"+columna);
-                btn.setStyle("-fx-background-color: #ffffff;" +
-                    "-fx-border-color: #00000077; -fx-border-width: 1");
-                btn.prefHeightProperty().bind(grid.heightProperty().divide(n < 3 ? 1 : n/3));
-                btn.prefWidthProperty().bind(grid.widthProperty().divide(n < 3 ? n : 3));
+                Button btn = new Button(materias.get(i));
+                btn.getStyleClass().add("btnMateria");
+                btn.prefHeightProperty().bind(grid.heightProperty().divide(numMaterias < 3 ? 1 : numMaterias /3));
+                btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
                 GridPane.setConstraints(btn, columna, fila);
                 grid.getChildren().add(btn);
         }

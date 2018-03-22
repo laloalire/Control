@@ -9,7 +9,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -41,10 +45,23 @@ public class Main extends Application {
 
 
         docente.setOnAction(event -> {
-
+            TextInputDialog  textInputDialog = new TextInputDialog();
+            textInputDialog.setContentText("Numero de empleado: ");
+            textInputDialog.getDialogPane().setHeaderText("Introducir o escanear numero de empleado");
+            textInputDialog.setTitle("Numero de empleado");
+            Optional<String> numEmp = textInputDialog.showAndWait();
+            if(!numEmp.isPresent()) {
+                return;
+            }
             try {
                 MysqlConnector sql=new MysqlConnector();
-
+                ArrayList<String> materias = sql.pedirMaterias(numEmp.get());
+                sql.shutdown();
+                if(materias.size() == 0) {
+                    new Alert(Alert.AlertType.ERROR, "Numero de empleado no valido").show();
+                }else {
+                    new Materias(materias).start(primaryStage);
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
