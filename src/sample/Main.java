@@ -47,22 +47,30 @@ public class Main extends Application {
 
         docente.setOnAction(event -> {
             TextInputDialog  textInputDialog = new TextInputDialog();
-            textInputDialog.setContentText("Numero de empleado: ");
-            textInputDialog.getDialogPane().setHeaderText("Introducir o escanear numero de empleado");
-            textInputDialog.setTitle("Numero de empleado");
+            textInputDialog.setContentText("Número de empleado: ");
+            textInputDialog.getDialogPane().setHeaderText("Introducir o escanear número de empleado");
+            textInputDialog.setTitle("Número de empleado");
+
             Optional<String> numEmp = textInputDialog.showAndWait();
+
+
             if(!numEmp.isPresent()) {
                 return;
             }
             try {
-                MysqlConnector sql=new MysqlConnector();
-                Map<String, String> materias = sql.pedirMaterias(numEmp.get());
-                sql.shutdown();
-                if(materias.size() == 0) {
-                    new Alert(Alert.AlertType.ERROR, "Numero de empleado no valido").show();
-                }else {
-                    new Materias(materias).start(primaryStage);
+                if(numEmp.get().matches("[0-9]+")){
+                    MysqlConnector sql=new MysqlConnector();
+                    Map<String, String> materias = sql.pedirMaterias(numEmp.get());
+                    sql.shutdown();
+                    if(materias.size() == 0) {
+                        new Alert(Alert.AlertType.INFORMATION, "Número de empleado no válido").show();
+                    }else {
+                        new Materias(materias).start(primaryStage);
+                    }
+                }else{
+                    new Alert(Alert.AlertType.INFORMATION,"Error: Sólo está permitido introducir números.").show();
                 }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -71,7 +79,21 @@ public class Main extends Application {
 
         });
         alumno.setOnAction(event ->{
+            TextInputDialog  textInputDialog = new TextInputDialog();
+            textInputDialog.setContentText("Número de control: ");
+            textInputDialog.getDialogPane().setHeaderText("Introducir o escanear tarjeta con número de control");
+            textInputDialog.setTitle("número de control");
+            Optional<String> numCont = textInputDialog.showAndWait();
 
+
+            if(!numCont.isPresent()) {
+                return;
+            }
+            if(numCont.get().matches("([0-9]{2}(CG)[0-9]{4})")){
+                new Alert(Alert.AlertType.INFORMATION,"Numero de control validado correctamente").show();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Comprueba tu información").show();
+            }
         });
 
 
@@ -110,6 +132,7 @@ public class Main extends Application {
         pane.setCenter(centrin);
         centrin.getChildren().add(alumno);
         centrin.getChildren().add(docente);
+
         pane.setTop(topima);
 
         primaryStage.setScene(new Scene (anchor));
