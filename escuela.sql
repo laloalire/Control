@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 11, 2018 at 01:44 AM
+-- Generation Time: Apr 11, 2018 at 01:57 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.4
 
@@ -153,6 +153,17 @@ INSERT INTO `docentes` (`num_emp`, `nomb`, `ap`, `am`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `registroAlumno`
+--
+
+CREATE TABLE `registroAlumno` (
+  `reg_id` int(11) NOT NULL,
+  `ncont` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `REGISTROS`
 --
 
@@ -213,6 +224,13 @@ ALTER TABLE `docentes`
   ADD PRIMARY KEY (`num_emp`);
 
 --
+-- Indexes for table `registroAlumno`
+--
+ALTER TABLE `registroAlumno`
+  ADD KEY `reg_id` (`reg_id`),
+  ADD KEY `ncont` (`ncont`);
+
+--
 -- Indexes for table `REGISTROS`
 --
 ALTER TABLE `REGISTROS`
@@ -247,6 +265,13 @@ ALTER TABLE `alumnos`
 --
 ALTER TABLE `asignaturas`
   ADD CONSTRAINT `asignaturas_ibfk_1` FOREIGN KEY (`num_emp`) REFERENCES `docentes` (`num_emp`);
+
+--
+-- Constraints for table `registroAlumno`
+--
+ALTER TABLE `registroAlumno`
+  ADD CONSTRAINT `registroAlumno_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `REGISTROS` (`Rg_id`),
+  ADD CONSTRAINT `registroAlumno_ibfk_2` FOREIGN KEY (`ncont`) REFERENCES `alumnos` (`ncont`);
 
 --
 -- Constraints for table `REGISTROS`
