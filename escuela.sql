@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2018 at 04:52 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Apr 11, 2018 at 01:44 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,9 +26,20 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `clasesEnCurso` ()  NO SQL
+select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from REGISTROS, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and REGISTROS.num_emp = D.num_emp and REGISTROS.asig_id = A.asig_id$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BEGIN
 	select asig_id, nomb nombre from asignaturas where num_emp = num;
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarAlumno` (IN `numcontrol` VARCHAR(8))  begin 
+ DECLARE cuenta int;
+ set cuenta = (select count(ncont) from alumnos where ncont = numcontrol);
+ if(cuenta > 0) then 
+ SELECT 1;
+ end IF;
+ end$$
 
 DELIMITER ;
 
@@ -43,6 +54,13 @@ CREATE TABLE `alumnos` (
   `carr_id` decimal(2,0) DEFAULT NULL,
   `sexo` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `alumnos`
+--
+
+INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`) VALUES
+('15CG0199', '1', 'm');
 
 -- --------------------------------------------------------
 
@@ -132,6 +150,32 @@ INSERT INTO `docentes` (`num_emp`, `nomb`, `ap`, `am`) VALUES
 (12347, 'Luis Alberto', 'Grijalva', 'Romero'),
 (12348, 'Lilia Margarita', 'Mena', 'Castillo');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `REGISTROS`
+--
+
+CREATE TABLE `REGISTROS` (
+  `Rg_id` int(11) NOT NULL,
+  `sexoh` decimal(2,0) DEFAULT NULL,
+  `sexom` decimal(2,0) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `entrada` time DEFAULT NULL,
+  `salida` time DEFAULT NULL,
+  `aula_id` int(11) DEFAULT NULL,
+  `asig_id` decimal(2,0) DEFAULT NULL,
+  `num_emp` int(11) DEFAULT NULL,
+  `carr_id` decimal(2,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `REGISTROS`
+--
+
+INSERT INTO `REGISTROS` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
+(1, '1', '0', '2018-04-10', '16:00:00', '22:38:00', 101, '0', 12347, '1');
+
 --
 -- Indexes for dumped tables
 --
@@ -169,6 +213,26 @@ ALTER TABLE `docentes`
   ADD PRIMARY KEY (`num_emp`);
 
 --
+-- Indexes for table `REGISTROS`
+--
+ALTER TABLE `REGISTROS`
+  ADD PRIMARY KEY (`Rg_id`),
+  ADD KEY `aula_id_index` (`aula_id`),
+  ADD KEY `asig_id_ind` (`asig_id`),
+  ADD KEY `ind_num_emp` (`num_emp`),
+  ADD KEY `carr_id_ind` (`carr_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `REGISTROS`
+--
+ALTER TABLE `REGISTROS`
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -183,6 +247,15 @@ ALTER TABLE `alumnos`
 --
 ALTER TABLE `asignaturas`
   ADD CONSTRAINT `asignaturas_ibfk_1` FOREIGN KEY (`num_emp`) REFERENCES `docentes` (`num_emp`);
+
+--
+-- Constraints for table `REGISTROS`
+--
+ALTER TABLE `REGISTROS`
+  ADD CONSTRAINT `REGISTROS_ibfk_1` FOREIGN KEY (`aula_id`) REFERENCES `aulas` (`aulaID`),
+  ADD CONSTRAINT `REGISTROS_ibfk_2` FOREIGN KEY (`asig_id`) REFERENCES `asignaturas` (`asig_id`),
+  ADD CONSTRAINT `REGISTROS_ibfk_3` FOREIGN KEY (`num_emp`) REFERENCES `docentes` (`num_emp`),
+  ADD CONSTRAINT `REGISTROS_ibfk_4` FOREIGN KEY (`carr_id`) REFERENCES `carreras` (`carr_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
