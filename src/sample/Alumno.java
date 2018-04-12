@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -13,16 +14,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Executable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Alumno extends Application{
     private  int numClases;
     private ArrayList<Map<String, String>> clases;
+    private String numControl;
 
-    public Alumno(ArrayList<Map<String, String>>  clases) {
+    public Alumno(ArrayList<Map<String, String>>  clases, String numControl) {
         this.clases = clases;
         this.numClases = clases.size();
+        this.numControl = numControl;
     }
 
     @Override
@@ -64,6 +69,20 @@ public class Alumno extends Application{
             btn.prefWidthProperty().bind(grid.widthProperty().divide(numClases < 3 ? numClases : 3));
             GridPane.setConstraints(btn, columna, fila);
             grid.getChildren().add(btn);
+            //Evento del boton
+            final int index = i;
+            btn.setOnAction(event -> {
+                try {
+                    MysqlConnector sql = new MysqlConnector();
+                    sql.registrarAlumno(clases.get(index).get("Rg_id"), numControl);
+                    new Alert(Alert.AlertType.INFORMATION, "Te haz registrado correctamene").showAndWait();
+                    new Main().start(new Stage());
+                    stage.hide();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            });
         }
         Scene scene  = new Scene(anchor);
         stage.setScene(scene);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 11, 2018 at 01:57 AM
+-- Generation Time: Apr 12, 2018 at 05:47 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.4
 
@@ -33,6 +33,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BE
 	select asig_id, nomb nombre from asignaturas where num_emp = num;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarAlumno` (IN `regID` INT, IN `numControl` VARCHAR(8))  NO SQL
+insert into registroAlumno values (regID, numControl)$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarAlumno` (IN `numcontrol` VARCHAR(8))  begin 
  DECLARE cuenta int;
  set cuenta = (select count(ncont) from alumnos where ncont = numcontrol);
@@ -60,7 +63,9 @@ CREATE TABLE `alumnos` (
 --
 
 INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`) VALUES
-('15CG0199', '1', 'm');
+('15CG0110', '1', 'm'),
+('15CG0192', '2', 'm'),
+('15CG0199', '1', 'h');
 
 -- --------------------------------------------------------
 
@@ -161,6 +166,22 @@ CREATE TABLE `registroAlumno` (
   `ncont` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Triggers `registroAlumno`
+--
+DELIMITER $$
+CREATE TRIGGER `insertRegistroAlumnos` AFTER INSERT ON `registroAlumno` FOR EACH ROW begin 
+declare genero varchar(8);
+SELECT sexo from alumnos where alumnos.ncont = NEW.ncont into genero;
+if(genero = 'h') then 
+update REGISTROS set sexoh = sexoh + 1;
+elseif(genero = 'm') then 
+update REGISTROS set sexom = sexom +1;
+end IF;
+end
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -185,7 +206,7 @@ CREATE TABLE `REGISTROS` (
 --
 
 INSERT INTO `REGISTROS` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
-(1, '1', '0', '2018-04-10', '16:00:00', '22:38:00', 101, '0', 12347, '1');
+(1, '0', '0', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
 
 --
 -- Indexes for dumped tables

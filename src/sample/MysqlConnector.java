@@ -66,7 +66,14 @@ public class MysqlConnector {
         return clases;
     }
 
-    private void resultSetAMap(ResultSet rs, Map<String, String> clases) throws SQLException {
+    public void registrarAlumno(String registroID, String numControl){
+        String consulta = "call registrarAlumno("+registroID+", '"+numControl+"')";
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            System.out.println(st.execute());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

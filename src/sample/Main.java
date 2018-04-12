@@ -98,7 +98,7 @@ public class Main extends Application {
                     } else if(clases.size() == 0){
                         new Alert(Alert.AlertType.INFORMATION, "No hay ninguna clase en curso" ).show();
                     } else {
-                        new Alumno(clases).start(primaryStage);
+                        new Alumno(clases, numCont.get()).start(primaryStage);
                     }
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Comprueba tu información").show();
