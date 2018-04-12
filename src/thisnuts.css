@@ -10,3 +10,18 @@
     -fx-image-repeat: no-repeat;
     -fx-image-position: center;
 }
+
+.btnMateria {
+    -fx-background-color: #866ea5;
+    -fx-border-color: rgba(163, 64, 165, 0.58);
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+.btnMateria:hover {
+    -fx-background-color: #745e8e;
+}
+.btnMateria:pressed {
+    -fx-background-color: #684f7f;
+}

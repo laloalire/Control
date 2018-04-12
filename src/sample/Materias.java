@@ -6,23 +6,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Alumno extends Application{
-    private  int numClases;
-    private ArrayList<Map<String, String>> clases;
-
-    public Alumno(ArrayList<Map<String, String>>  clases) {
-        this.clases = clases;
-        this.numClases = clases.size();
+public class Materias extends Application{
+    private  int numMaterias;
+    private Map<String, String> materias;
+    public Materias(Map<String, String> materias) {
+        this.materias = materias;
+        this.numMaterias = materias.size();
     }
 
     @Override
@@ -53,21 +48,22 @@ public class Alumno extends Application{
         topima.setAlignment(Pos.CENTER);
         sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
-        for(int i = 0; i < numClases; i ++){
-            int columna = i % 3;
-            int fila = i / 3;
-            String texto = clases.get(i).get("asignatura")  +"\n"+ clases.get(i).get("maestro") +"\nD" +clases.get(i).get("aula");
-            Button btn = new Button(texto);
-            btn.setTextAlignment(TextAlignment.CENTER);
-            btn.getStyleClass().add("btnMateria");
-            btn.prefHeightProperty().bind(grid.heightProperty().divide(numClases < 3 ? 1 : numClases /3));
-            btn.prefWidthProperty().bind(grid.widthProperty().divide(numClases < 3 ? numClases : 3));
-            GridPane.setConstraints(btn, columna, fila);
-            grid.getChildren().add(btn);
+        for(int i = 0; i < numMaterias; i ++){
+                int columna = i % 3;
+                int fila = i / 3;
+                Button btn = new Button(materias.values().toArray()[i] + "");
+                btn.getStyleClass().add("btnMateria");
+                btn.prefHeightProperty().bind(grid.heightProperty().divide(numMaterias < 3 ? 1 : numMaterias /3));
+                btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
+                GridPane.setConstraints(btn, columna, fila);
+                grid.getChildren().add(btn);
         }
         Scene scene  = new Scene(anchor);
         stage.setScene(scene);
         stage.show();
+    }
 
+    public static void main(String[] args){
+        launch(args);
     }
 }
