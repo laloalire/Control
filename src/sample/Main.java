@@ -65,7 +65,7 @@ public class Main extends Application {
                     if (materias.size() == 0) {
                         new Alert(Alert.AlertType.INFORMATION, "Número de empleado no válido").show();
                     } else {
-                        new Materias(materias).start(primaryStage);
+                        new Materias(materias, numEmp.get()).start(primaryStage);
                     }
                 } else {
                     new Alert(Alert.AlertType.INFORMATION, "Error: Sólo está permitido introducir números.").show();
