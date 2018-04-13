@@ -35,7 +35,11 @@ public class Materias extends Application{
             new Main().start(new Stage());
             stage.hide();
         });
+        atras.setPrefHeight(50);
+        atras.getStyleClass().add("btnAtras");
         base.getChildren().add(atras);
+        base.setAlignment(Pos.CENTER_LEFT);
+        base.setPadding(new Insets(0, 0, 5,5));
         borderPane.setBottom(base);
         AnchorPane.setBottomAnchor(borderPane, 0.0);
         AnchorPane.setLeftAnchor(borderPane, 0.0);
