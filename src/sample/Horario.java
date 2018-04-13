@@ -30,8 +30,10 @@ public class Horario extends Application {
         AnchorPane anchor = new AnchorPane();
         AnchorPane Ima = new AnchorPane();
         ImageView Imagen = new ImageView("/Imagenes/header.png");
-        ImageView FlechaArriba = new ImageView("/Imagenes/UP.png");
-        ImageView FlechaAbajo = new ImageView("/Imagenes/DOWN.png");
+        ImageView FlechaArriba = new ImageView("/Imagenes/up.png");
+        ImageView FlechaAbajo = new ImageView("/Imagenes/down.png");
+
+
         anchor.setPrefSize(720, 480);
         BorderPane Border = new BorderPane();
         Ima.getChildren().add(Imagen);
@@ -100,6 +102,7 @@ public class Horario extends Application {
         Ima.setStyle("-fx-background-color: #ffffff;");
         btnUP.setGraphic(FlechaArriba);
         btnDown.setGraphic(FlechaAbajo);
+
 
 
 
