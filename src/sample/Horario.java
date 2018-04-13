@@ -41,7 +41,7 @@ public class Horario extends Application {
 
         //Centro botones y texto
         BorderPane Centro = new BorderPane();
-        Centro.setPadding(new Insets(15,0,15,300));
+        Centro.setPadding(new Insets(15,0,15,500));
 
         Button btnUP = new Button();
         Button btnDown = new Button();
@@ -53,7 +53,7 @@ public class Horario extends Application {
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
         cantidad.setFont(new Font("Arial",100));
-        cantidad.setPadding(new Insets(0,0,0,20));
+        cantidad.setPadding(new Insets(0,0,0,200));
 
         //cantidad.setLayoutX(10);
         //cantidad.setLayoutY(10);
@@ -62,18 +62,23 @@ public class Horario extends Application {
 
 
         //Lado derecho del border Clases
-        HBox salones = new HBox();
-        salones.setPadding(new Insets(50,50,50,0));
+        VBox salones = new VBox();
+        salones.setPadding(new Insets(50,400,50,0));
         salones.setAlignment(Pos.CENTER);
+        salones.setSpacing(20);
         Button D101 = new Button();
         Button D102 = new Button();
         Button D104 = new Button();
 
         D101.setText("D101");
+        D102.setText("D102");
+        D104.setText("D104");
 
 
 
         salones.getChildren().add(D101);
+        salones.getChildren().add(D102);
+        salones.getChildren().add(D104);
 
 
 
@@ -130,6 +135,13 @@ public class Horario extends Application {
 
         D101.prefHeightProperty().bind(Border.heightProperty().divide(6));
         D101.prefWidthProperty().bind(Border.widthProperty().divide(6));
+
+        D102.prefHeightProperty().bind(Border.heightProperty().divide(6));
+        D102.prefWidthProperty().bind(Border.widthProperty().divide(6));
+
+        D104.prefHeightProperty().bind(Border.heightProperty().divide(6));
+        D104.prefWidthProperty().bind(Border.widthProperty().divide(6));
+
 
 
         Border.setStyle("-fx-background-color: #745e8e;");
