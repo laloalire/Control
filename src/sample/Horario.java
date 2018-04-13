@@ -52,12 +52,9 @@ public class Horario extends Application {
         cantidad.setText("1");
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
-<<<<<<< HEAD
         cantidad.setFont(new Font("Arial",100));
         cantidad.setPadding(new Insets(0,0,0,20));
-=======
-        cantidad.setFont(new Font("Arial", 100));
->>>>>>> 01aebeebf240f5c8ab3dccb7a27b3d6c7c07c67b
+
         //cantidad.setLayoutX(10);
         //cantidad.setLayoutY(10);
 
