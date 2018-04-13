@@ -78,7 +78,25 @@ public class Horario extends Application {
         Centro.setTop(Top);
         Centro.setBottom(Buttom);
         Centro.setLeft(cen);
+        btnUP.setOnAction(Event ->{
+            int cactual=Integer.parseInt(cantidad.getText());
+            if(Integer.parseInt(cantidad.getText())>=1 && Integer.parseInt(cantidad.getText())<4 ){
+                cantidad.setText(cactual+1+"");
+            }else{
 
+            }
+
+
+        });
+        btnDown.setOnAction(Event->{
+            int cactual=Integer.parseInt(cantidad.getText());
+            if(Integer.parseInt(cantidad.getText())>1 && Integer.parseInt(cantidad.getText())<=4 ){
+                cantidad.setText(cactual-1+"");
+            }else{
+
+            }
+
+        });
 
 
 
