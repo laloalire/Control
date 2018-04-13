@@ -26,8 +26,7 @@ import java.util.Optional;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Prototipo.fxml"));
+    public void start(Stage primaryStage)  {
         primaryStage.setTitle("Hello World");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();

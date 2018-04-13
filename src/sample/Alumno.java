@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -38,6 +35,18 @@ public class Alumno extends Application{
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
         GridPane grid = new GridPane();
+        StackPane base = new StackPane();
+        Button atras = new Button("Regresar");
+        atras.setOnAction(actionEvent -> {
+            new Main().start(new Stage());
+            stage.hide();
+        });
+        atras.setPrefHeight(50);
+        atras.getStyleClass().add("btnAtras");
+        base.getChildren().add(atras);
+        base.setAlignment(Pos.CENTER_LEFT);
+        base.setPadding(new Insets(0, 0, 5,5));
+        borderPane.setBottom(base);
         AnchorPane.setBottomAnchor(borderPane, 0.0);
         AnchorPane.setLeftAnchor(borderPane, 0.0);
         AnchorPane.setRightAnchor(borderPane, 0.0);
