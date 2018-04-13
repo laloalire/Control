@@ -29,6 +29,14 @@ public class Materias extends Application{
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
         GridPane grid = new GridPane();
+        StackPane  base = new StackPane();
+        Button atras = new Button("Regresar");
+        atras.setOnAction(actionEvent -> {
+            new Main().start(new Stage());
+            stage.hide();
+        });
+        base.getChildren().add(atras);
+        borderPane.setBottom(base);
         AnchorPane.setBottomAnchor(borderPane, 0.0);
         AnchorPane.setLeftAnchor(borderPane, 0.0);
         AnchorPane.setRightAnchor(borderPane, 0.0);
@@ -49,6 +57,10 @@ public class Materias extends Application{
         topima.setAlignment(Pos.CENTER);
         sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
+        grid.heightProperty().addListener((observable -> {
+            System.out.println(grid.getHeight());
+        }));
+
         for(int i = 0; i < numMaterias; i ++){
                 int columna = i % 3;
                 int fila = i / 3;
@@ -64,9 +76,11 @@ public class Materias extends Application{
                     stage.hide();
                 });
         }
+
         Scene scene  = new Scene(anchor);
         stage.setScene(scene);
         stage.show();
+
     }
 
     public static void main(String[] args){
