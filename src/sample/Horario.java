@@ -16,9 +16,12 @@ import javafx.stage.Stage;
 import org.omg.PortableServer.POA;
 
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class Horario extends Application {
+    private ArrayList<String> aulasDisponibles;
     private String numempleado;
     private String idmateria;
 
@@ -28,8 +31,8 @@ public class Horario extends Application {
         AnchorPane anchor = new AnchorPane();
         AnchorPane Ima = new AnchorPane();
         ImageView Imagen = new ImageView("/Imagenes/header.png");
-        ImageView FlechaArriba = new ImageView("/Imagenes/up.png");
-        ImageView FlechaAbajo = new ImageView("/Imagenes/down.png");
+        ImageView FlechaArriba = new ImageView("/Imagenes/UP.png");
+        ImageView FlechaAbajo = new ImageView("/Imagenes/DOWN.png");
 
 
         anchor.setPrefSize(720, 480);
@@ -66,21 +69,12 @@ public class Horario extends Application {
         salones.setPadding(new Insets(50,400,50,0));
         salones.setAlignment(Pos.CENTER);
         salones.setSpacing(20);
-        Button D101 = new Button();
-        Button D102 = new Button();
-        Button D104 = new Button();
-
-        D101.setText("D101");
-        D102.setText("D102");
-        D104.setText("D104");
-
-
-
-        salones.getChildren().add(D101);
-        salones.getChildren().add(D102);
-        salones.getChildren().add(D104);
-
-
+        for(String aula : aulasDisponibles){
+                Button btnAula = new Button("D"+aula);
+                salones.getChildren().add(btnAula);
+                btnAula.prefHeightProperty().bind(Border.heightProperty().divide(6));
+                btnAula.prefWidthProperty().bind(Border.widthProperty().divide(6));
+        }
 
         //boton.setPadding();
         HBox Top = new HBox();
@@ -133,14 +127,7 @@ public class Horario extends Application {
         cantidad.prefHeightProperty().bind(Border.heightProperty().divide(6));
         cantidad.prefWidthProperty().bind(Border.widthProperty().divide(6));
 
-        D101.prefHeightProperty().bind(Border.heightProperty().divide(6));
-        D101.prefWidthProperty().bind(Border.widthProperty().divide(6));
 
-        D102.prefHeightProperty().bind(Border.heightProperty().divide(6));
-        D102.prefWidthProperty().bind(Border.widthProperty().divide(6));
-
-        D104.prefHeightProperty().bind(Border.heightProperty().divide(6));
-        D104.prefWidthProperty().bind(Border.widthProperty().divide(6));
 
 
 
@@ -163,6 +150,18 @@ public class Horario extends Application {
     public Horario(String numempleado, String idmateria) {
         this.numempleado = numempleado;
         this.idmateria = idmateria;
+        MysqlConnector sql = null;
+        try {
+            sql = new MysqlConnector();
+            ArrayList<String> aulasDisponibles = sql.aulasDisponibles();
+            this.aulasDisponibles = aulasDisponibles;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public static void main(String[] args) {

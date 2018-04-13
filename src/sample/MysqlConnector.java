@@ -31,7 +31,7 @@ public class MysqlConnector {
                 materias.put(rs.getString(1), rs.getString(2));
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return materias;
     }
@@ -89,6 +89,22 @@ public class MysqlConnector {
         }
         return null;
     }
+
+    public ArrayList<String> aulasDisponibles (){
+        String consulta = "select  aulaid  from  aulas  where  aulaid  not in  ( select  aula_id  from REGISTROS  where  fecha  = CURDATE()  and  entrada <  CURTIME()  and salida > CURTIME());";
+        ArrayList<String> respuesta = new ArrayList<>();
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                respuesta.add(rs.getString(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  respuesta;
+    }
+
 
 
 }
