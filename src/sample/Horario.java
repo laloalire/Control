@@ -9,10 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -41,6 +38,8 @@ public class Horario extends Application {
 
         //Centro botones y texto
         BorderPane Centro = new BorderPane();
+        Centro.setPadding(new Insets(15,0,15,300));
+
         Button btnUP = new Button();
         Button btnDown = new Button();
         Button aceptar = new Button();
@@ -55,11 +54,29 @@ public class Horario extends Application {
         //cantidad.setLayoutY(10);
 
 
+
+
+        //Lado derecho del border Clases
+        HBox salones = new HBox();
+        salones.setPadding(new Insets(50,50,50,0));
+        salones.setAlignment(Pos.CENTER);
+        Button D101 = new Button();
+        Button D102 = new Button();
+        Button D104 = new Button();
+
+        D101.setText("D101");
+
+
+
+        salones.getChildren().add(D101);
+
+
+
         VBox boton = new VBox();
-        boton.getChildren().add(aceptar);
-        boton.setAlignment(Pos.CENTER_LEFT);
-        boton.setPadding(new Insets(0,0,0,12));
-        //boton.setPadding();
+        //boton.getChildren().add(aceptar);
+        boton.setAlignment(Pos.CENTER);
+
+
         HBox Top = new HBox();
         Top.getChildren().add(btnUP);
         Top.setAlignment(Pos.CENTER);
@@ -73,9 +90,11 @@ public class Horario extends Application {
         cen.getChildren().add(boton);
         //cen.getChildren().add(aceptar);
         Border.setLeft(Centro);
+        Border.setCenter(null);
         Centro.setTop(Top);
         Centro.setBottom(Buttom);
-        Centro.setLeft(cen);
+        Centro.setCenter(cen);
+        Border.setRight(salones);
 
 
 
