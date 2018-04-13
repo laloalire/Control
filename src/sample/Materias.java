@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -31,6 +32,8 @@ public class Materias extends Application{
         GridPane grid = new GridPane();
         StackPane  base = new StackPane();
         Button atras = new Button("Regresar");
+        ImageView imgAtras=new ImageView("/imagenes/back.png");
+        atras.setGraphic(imgAtras);
         atras.setOnAction(actionEvent -> {
             new Main().start(new Stage());
             stage.hide();
