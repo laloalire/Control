@@ -10,16 +10,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Materias extends Application{
     private  int numMaterias;
     private Map<String, String> materias;
-    private String numEmp;
-    public Materias(Map<String, String> materias, String numEmp) {
+    public Materias(Map<String, String> materias) {
         this.materias = materias;
         this.numMaterias = materias.size();
-        this.numEmp = numEmp;
     }
 
     @Override
@@ -77,11 +76,6 @@ public class Materias extends Application{
                 btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
                 GridPane.setConstraints(btn, columna, fila);
                 grid.getChildren().add(btn);
-                final int index = i;
-                btn.setOnAction(actionEvent -> {
-                    new Horario(materias.keySet().toArray()[index] + "", numEmp).start(new Stage());
-                    stage.hide();
-                });
         }
 
         Scene scene  = new Scene(anchor);
