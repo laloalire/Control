@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import org.omg.PortableServer.POA;
 
 import java.awt.*;
 
@@ -44,12 +46,18 @@ public class Horario extends Application {
         aceptar.setFont(new Font("Arial",45));
         Label cantidad = new Label();
         cantidad.setText("1");
-        cantidad.setTextAlignment(TextAlignment.CENTER);
+        cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
         cantidad.setFont(new Font("Arial",100));
         //cantidad.setLayoutX(10);
         //cantidad.setLayoutY(10);
 
+
+        VBox boton = new VBox();
+        boton.getChildren().add(aceptar);
+        boton.setAlignment(Pos.CENTER_LEFT);
+        boton.setPadding(new Insets(0,0,0,12));
+        //boton.setPadding();
         HBox Top = new HBox();
         Top.getChildren().add(btnUP);
         Top.setAlignment(Pos.CENTER);
@@ -60,11 +68,14 @@ public class Horario extends Application {
         cen.setAlignment(Pos.CENTER);
         cen.setSpacing(15);
         cen.getChildren().add(cantidad);
-        cen.getChildren().add(aceptar);
-        Border.setCenter(Centro);
+        cen.getChildren().add(boton);
+        //cen.getChildren().add(aceptar);
+        Border.setLeft(Centro);
         Centro.setTop(Top);
         Centro.setBottom(Buttom);
-        Centro.setCenter(cen);
+        Centro.setLeft(cen);
+
+
 
 
 
