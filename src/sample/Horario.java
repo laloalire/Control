@@ -44,7 +44,7 @@ public class Horario extends Application {
         aceptar.setFont(new Font("Arial",45));
         Label cantidad = new Label();
         cantidad.setText("1");
-        cantidad.setTextAlignment(TextAlignment.RIGHT);
+        cantidad.setTextAlignment(TextAlignment.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
         cantidad.setFont(new Font("Arial",100));
         //cantidad.setLayoutX(10);
