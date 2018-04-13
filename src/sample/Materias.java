@@ -33,7 +33,7 @@ public class Materias extends Application{
         GridPane grid = new GridPane();
         StackPane  base = new StackPane();
         Button atras = new Button("Regresar");
-        ImageView imgAtras=new ImageView("/imagenes/back.png");
+        ImageView imgAtras=new ImageView("/Imagenes/back.png");
         atras.setGraphic(imgAtras);
         atras.setOnAction(actionEvent -> {
             new Main().start(new Stage());
@@ -80,7 +80,7 @@ public class Materias extends Application{
                 grid.getChildren().add(btn);
                 final int index = i;
                 btn.setOnAction(actionEvent -> {
-                    new Horario(materias.keySet().toArray()[index]+"", numEmp);
+                    new Horario(materias.keySet().toArray()[index]+"", numEmp).start(new Stage());
                     stage.hide();
                 });
         }
