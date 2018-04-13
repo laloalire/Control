@@ -27,8 +27,10 @@ public class Horario extends Application {
         AnchorPane anchor = new AnchorPane();
         AnchorPane Ima = new AnchorPane();
         ImageView Imagen = new ImageView("/Imagenes/header.png");
-        ImageView FlechaArriba = new ImageView("/Imagenes/UP.png");
-        ImageView FlechaAbajo = new ImageView("/Imagenes/DOWN.png");
+        ImageView FlechaArriba = new ImageView("/Imagenes/up.png");
+        ImageView FlechaAbajo = new ImageView("/Imagenes/down.png");
+
+
         anchor.setPrefSize(720, 480);
         BorderPane Border = new BorderPane();
         Ima.getChildren().add(Imagen);
@@ -50,6 +52,7 @@ public class Horario extends Application {
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
         cantidad.setFont(new Font("Arial",100));
+        cantidad.setPadding(new Insets(0,0,0,20));
         //cantidad.setLayoutX(10);
         //cantidad.setLayoutY(10);
 
@@ -93,9 +96,27 @@ public class Horario extends Application {
         Border.setCenter(null);
         Centro.setTop(Top);
         Centro.setBottom(Buttom);
-        Centro.setCenter(cen);
         Border.setRight(salones);
+        Centro.setLeft(cen);
+        btnUP.setOnAction(Event ->{
+            int cactual=Integer.parseInt(cantidad.getText());
+            if(Integer.parseInt(cantidad.getText())>=1 && Integer.parseInt(cantidad.getText())<4 ){
+                cantidad.setText(cactual+1+"");
+            }else{
 
+            }
+
+
+        });
+        btnDown.setOnAction(Event->{
+            int cactual=Integer.parseInt(cantidad.getText());
+            if(Integer.parseInt(cantidad.getText())>1 && Integer.parseInt(cantidad.getText())<=4 ){
+                cantidad.setText(cactual-1+"");
+            }else{
+
+            }
+
+        });
 
 
 
@@ -119,6 +140,7 @@ public class Horario extends Application {
         Ima.setStyle("-fx-background-color: #ffffff;");
         btnUP.setGraphic(FlechaArriba);
         btnDown.setGraphic(FlechaAbajo);
+
 
 
 
