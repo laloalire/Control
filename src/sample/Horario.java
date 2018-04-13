@@ -19,7 +19,8 @@ import java.awt.*;
 
 
 public class Horario extends Application {
-
+    private String numempleado;
+    private String idmateria;
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Horario");
@@ -102,4 +103,9 @@ public class Horario extends Application {
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
     }
+    public Horario(String numempleado, String idmateria){
+        this.numempleado=numempleado;
+        this.idmateria=idmateria;
+    }
+
 }
