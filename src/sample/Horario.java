@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,7 +25,7 @@ public class Horario extends Application {
     private String numempleado;
     private String idmateria;
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage)  {
         primaryStage.setTitle("Horario");
         AnchorPane anchor = new AnchorPane();
         AnchorPane Ima = new AnchorPane();
@@ -118,5 +119,9 @@ public class Horario extends Application {
         this.numempleado=numempleado;
         this.idmateria=idmateria;
     }
+public static void main(String[] args){
+    Platform.runLater(()->new Horario("s","s").start(new Stage()));
 
+
+}
 }
