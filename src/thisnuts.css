@@ -44,3 +44,7 @@
 .btnMateria:pressed {
     -fx-background-color: #684f7f;
 }
+
+.btnAtras {
+    -fx-background-color: #2293de;
+}

@@ -21,8 +21,9 @@ import java.awt.*;
 public class Horario extends Application {
     private String numempleado;
     private String idmateria;
+
     @Override
-    public void start(Stage primaryStage)  {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Horario");
         AnchorPane anchor = new AnchorPane();
         AnchorPane Ima = new AnchorPane();
@@ -46,13 +47,17 @@ public class Horario extends Application {
         Button btnDown = new Button();
         Button aceptar = new Button();
         aceptar.setText("ACEPTAR");
-        aceptar.setFont(new Font("Arial",45));
+        aceptar.setFont(new Font("Arial", 45));
         Label cantidad = new Label();
         cantidad.setText("1");
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
+<<<<<<< HEAD
         cantidad.setFont(new Font("Arial",100));
         cantidad.setPadding(new Insets(0,0,0,20));
+=======
+        cantidad.setFont(new Font("Arial", 100));
+>>>>>>> 01aebeebf240f5c8ab3dccb7a27b3d6c7c07c67b
         //cantidad.setLayoutX(10);
         //cantidad.setLayoutY(10);
 
@@ -76,10 +81,11 @@ public class Horario extends Application {
 
 
         VBox boton = new VBox();
-        //boton.getChildren().add(aceptar);
-        boton.setAlignment(Pos.CENTER);
 
-
+        boton.getChildren().add(aceptar);
+        boton.setAlignment(Pos.CENTER_LEFT);
+        boton.setPadding(new Insets(0, 0, 0, 12));
+        //boton.setPadding();
         HBox Top = new HBox();
         Top.getChildren().add(btnUP);
         Top.setAlignment(Pos.CENTER);
@@ -118,9 +124,6 @@ public class Horario extends Application {
 
         });
 
-
-
-
         //Agrandar botones y label
         btnUP.prefHeightProperty().bind(Border.heightProperty().divide(4));
         btnUP.prefWidthProperty().bind(Border.widthProperty().divide(4));
@@ -135,14 +138,10 @@ public class Horario extends Application {
         cantidad.prefWidthProperty().bind(Border.widthProperty().divide(6));
 
 
-
         Border.setStyle("-fx-background-color: #745e8e;");
         Ima.setStyle("-fx-background-color: #ffffff;");
         btnUP.setGraphic(FlechaArriba);
         btnDown.setGraphic(FlechaAbajo);
-
-
-
 
         AnchorPane.setTopAnchor(Border, 0.0);
         AnchorPane.setBottomAnchor(Border, 0.0);
@@ -150,19 +149,19 @@ public class Horario extends Application {
         AnchorPane.setLeftAnchor(Border, 0.0);
 
 
-
-
         anchor.getChildren().add(Border);
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
     }
-    public Horario(String numempleado, String idmateria){
-        this.numempleado=numempleado;
-        this.idmateria=idmateria;
+
+    public Horario(String numempleado, String idmateria) {
+        this.numempleado = numempleado;
+        this.idmateria = idmateria;
     }
-public static void main(String[] args){
-    Platform.runLater(()->new Horario("s","s").start(new Stage()));
+
+    public static void main(String[] args) {
+        Platform.runLater(() -> new Horario("s", "s").start(new Stage()));
 
 
-}
+    }
 }
