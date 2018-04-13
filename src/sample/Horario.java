@@ -77,11 +77,6 @@ public class Horario extends Application {
 
 
 
-        VBox boton = new VBox();
-
-        boton.getChildren().add(aceptar);
-        boton.setAlignment(Pos.CENTER_LEFT);
-        boton.setPadding(new Insets(0, 0, 0, 12));
         //boton.setPadding();
         HBox Top = new HBox();
         Top.getChildren().add(btnUP);
@@ -93,7 +88,6 @@ public class Horario extends Application {
         cen.setAlignment(Pos.CENTER);
         cen.setSpacing(15);
         cen.getChildren().add(cantidad);
-        cen.getChildren().add(boton);
         //cen.getChildren().add(aceptar);
         Border.setLeft(Centro);
         Border.setCenter(null);
@@ -133,6 +127,9 @@ public class Horario extends Application {
 
         cantidad.prefHeightProperty().bind(Border.heightProperty().divide(6));
         cantidad.prefWidthProperty().bind(Border.widthProperty().divide(6));
+
+        D101.prefHeightProperty().bind(Border.heightProperty().divide(6));
+        D101.prefWidthProperty().bind(Border.widthProperty().divide(6));
 
 
         Border.setStyle("-fx-background-color: #745e8e;");
