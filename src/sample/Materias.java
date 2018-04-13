@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Materias extends Application{
+    private String numEmp;
     private  int numMaterias;
     private Map<String, String> materias;
-    public Materias(Map<String, String> materias) {
+    public Materias(Map<String, String> materias, String numEmp) {
         this.materias = materias;
         this.numMaterias = materias.size();
+        this.numEmp = numEmp;
     }
 
     @Override
@@ -76,6 +78,11 @@ public class Materias extends Application{
                 btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
                 GridPane.setConstraints(btn, columna, fila);
                 grid.getChildren().add(btn);
+                final int index = i;
+                btn.setOnAction(actionEvent -> {
+                    new Horario(materias.keySet().toArray()[index]+"", numEmp);
+                    stage.hide();
+                });
         }
 
         Scene scene  = new Scene(anchor);
