@@ -31,9 +31,14 @@ public class Materias extends Application{
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
         GridPane grid = new GridPane();
-        StackPane  base = new StackPane();
+        HBox  base = new HBox();
         Button atras = new Button("Regresar");
         ImageView imgAtras=new ImageView("/Imagenes/back.png");
+        Button generarLista=new Button("Listas de asistencia");
+        ImageView imgLista=new ImageView("/Imagenes/checklist.png");
+        generarLista.setGraphic(imgLista);
+        StackPane baseDerecha=new StackPane();
+
         atras.setGraphic(imgAtras);
         atras.setOnAction(actionEvent -> {
             new Main().start(new Stage());
@@ -41,7 +46,14 @@ public class Materias extends Application{
         });
         atras.setPrefHeight(50);
         atras.getStyleClass().add("btnAtras");
+        generarLista.setPrefHeight(50);
+
         base.getChildren().add(atras);
+        baseDerecha.getChildren().add(generarLista);
+        base.getChildren().add(baseDerecha);
+        baseDerecha.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(baseDerecha,Priority.ALWAYS);
+        baseDerecha.setPadding(new Insets(0,30,0,0));
         base.setAlignment(Pos.CENTER_LEFT);
         base.setPadding(new Insets(0, 0, 5,5));
         borderPane.setBottom(base);
