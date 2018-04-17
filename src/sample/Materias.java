@@ -1,15 +1,25 @@
 package sample;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -38,7 +48,7 @@ public class Materias extends Application{
         ImageView imgLista=new ImageView("/Imagenes/checklist.png");
         generarLista.setGraphic(imgLista);
         StackPane baseDerecha=new StackPane();
-
+        generarLista.setOnAction(actionEvent -> generarReporte());
         atras.setGraphic(imgAtras);
         atras.setOnAction(actionEvent -> {
             new Main().start(new Stage());
@@ -106,4 +116,27 @@ public class Materias extends Application{
     public static void main(String[] args){
         launch(args);
     }
+    public void generarReporte() {
+        Document reporte = new Document(PageSize.LETTER);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
+        File file =fileChooser.showSaveDialog(null);
+
+        try {
+            if(file != null) {
+                PdfWriter.getInstance(reporte, new FileOutputStream(file));
+                reporte.open();
+                Paragraph titulo =new Paragraph("lel pidief");
+                reporte.add(titulo);
+                reporte.close();
+            }
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "No se pudo leer el archivo. Otra aplicacion pude estarlo utilizando").show();
+            e.printStackTrace();
+        }
+    }
+
 }
