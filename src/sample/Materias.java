@@ -135,25 +135,42 @@ public class Materias extends Application{
             return;
         }
        ArrayList<String> registrosId=  sql.getRegistros(numEmp, fechas[1], fechas[0]);
+        if(registrosId.size() == 0){
+            new Alert(Alert.AlertType.ERROR, "Ninguna lista para este docente").show();
+            return;
+        }
 
         Document reporte = new Document(PageSize.LETTER);
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
         File file =fileChooser.showSaveDialog(null);
-        ArrayList<String> datosLista = sql.getListaDatos(registrosId.get(0));
-        try {
-            if(file != null) {
-                PdfWriter.getInstance(reporte, new FileOutputStream(file));
-                reporte.open();
-                reporte.add(new Paragraph());
-                reporte.close();
-            }
+        for(String registroId: registrosId) {
+            ArrayList<String> datosLista = sql.getListaDatos(registroId);
+            ArrayList<String> listaAlumnos = sql.getListaAlumnos(registroId);
+            try {
+                if (file != null) {
+                    PdfWriter.getInstance(reporte, new FileOutputStream(file));
+                    reporte.open();
+                    PdfPTable header = new PdfPTable(4);
+                    header.setWidthPercentage(100);
+                    header.setWidths(new int[]{1, 1, 1, 1});
+                    header.addCell("Fecha: " + datosLista.get(0));
+                    header.addCell("Asignatura: " + datosLista.get(1));
+                    header.addCell("Carrera: " + datosLista.get(2));
+                    header.addCell("Grupo: " + datosLista.get(3));
+                    reporte.add(header);
+                    for (String alumno : listaAlumnos) {
+                        reporte.add(new Paragraph(alumno));
+                    }
+                    reporte.close();
+                }
 
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, "No se pudo leer el archivo. Otra aplicacion pude estarlo utilizando").show();
-            e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                new Alert(Alert.AlertType.ERROR, "No se pudo leer el archivo. Otra aplicacion pude estarlo utilizando").show();
+                e.printStackTrace();
+            }
         }
     }
 

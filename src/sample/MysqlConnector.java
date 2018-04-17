@@ -131,5 +131,10 @@ public class MysqlConnector {
         }
         return respuesta;
     }
+
+    public ArrayList<String> getListaAlumnos(String idRegistro) {
+        String consulta = "call getLista("+idRegistro+")";
+        return  consultaAArrayList(consulta);
+    }
 }
 
