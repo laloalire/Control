@@ -2,10 +2,10 @@
 -- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 12, 2018 at 05:47 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 17, 2018 at 03:40 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,6 +28,10 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `clasesEnCurso` ()  NO SQL
 select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from REGISTROS, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and REGISTROS.num_emp = D.num_emp and REGISTROS.asig_id = A.asig_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getRegistros` (`num_empp` NUMERIC, `fechainicio` DATE, `fechafin` DATE)  BEGIN
+select rg_id from registros where doc_id=num_empp and fecha between fechainicio and fechafin;
+END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BEGIN
 	select asig_id, nomb nombre from asignaturas where num_emp = num;
@@ -55,17 +59,19 @@ DELIMITER ;
 CREATE TABLE `alumnos` (
   `ncont` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `carr_id` decimal(2,0) DEFAULT NULL,
-  `sexo` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `sexo` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `grupo` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `alumnos`
 --
 
-INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`) VALUES
-('15CG0110', '1', 'm'),
-('15CG0192', '2', 'm'),
-('15CG0199', '1', 'h');
+INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`, `grupo`) VALUES
+('15CG0110', '1', 'm', ''),
+('15CG0146', '1', 'H', '6AM'),
+('15CG0192', '2', 'm', ''),
+('15CG0199', '1', 'h', '');
 
 -- --------------------------------------------------------
 
@@ -158,19 +164,19 @@ INSERT INTO `docentes` (`num_emp`, `nomb`, `ap`, `am`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registroAlumno`
+-- Table structure for table `registroalumno`
 --
 
-CREATE TABLE `registroAlumno` (
+CREATE TABLE `registroalumno` (
   `reg_id` int(11) NOT NULL,
   `ncont` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Triggers `registroAlumno`
+-- Triggers `registroalumno`
 --
 DELIMITER $$
-CREATE TRIGGER `insertRegistroAlumnos` AFTER INSERT ON `registroAlumno` FOR EACH ROW begin 
+CREATE TRIGGER `insertRegistroAlumnos` AFTER INSERT ON `registroalumno` FOR EACH ROW begin 
 declare genero varchar(8);
 SELECT sexo from alumnos where alumnos.ncont = NEW.ncont into genero;
 if(genero = 'h') then 
@@ -185,10 +191,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `REGISTROS`
+-- Table structure for table `registros`
 --
 
-CREATE TABLE `REGISTROS` (
+CREATE TABLE `registros` (
   `Rg_id` int(11) NOT NULL,
   `sexoh` decimal(2,0) DEFAULT NULL,
   `sexom` decimal(2,0) DEFAULT NULL,
@@ -202,10 +208,10 @@ CREATE TABLE `REGISTROS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `REGISTROS`
+-- Dumping data for table `registros`
 --
 
-INSERT INTO `REGISTROS` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
+INSERT INTO `registros` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
 (1, '0', '0', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
 
 --
@@ -245,16 +251,16 @@ ALTER TABLE `docentes`
   ADD PRIMARY KEY (`num_emp`);
 
 --
--- Indexes for table `registroAlumno`
+-- Indexes for table `registroalumno`
 --
-ALTER TABLE `registroAlumno`
+ALTER TABLE `registroalumno`
   ADD KEY `reg_id` (`reg_id`),
   ADD KEY `ncont` (`ncont`);
 
 --
--- Indexes for table `REGISTROS`
+-- Indexes for table `registros`
 --
-ALTER TABLE `REGISTROS`
+ALTER TABLE `registros`
   ADD PRIMARY KEY (`Rg_id`),
   ADD KEY `aula_id_index` (`aula_id`),
   ADD KEY `asig_id_ind` (`asig_id`),
@@ -266,9 +272,9 @@ ALTER TABLE `REGISTROS`
 --
 
 --
--- AUTO_INCREMENT for table `REGISTROS`
+-- AUTO_INCREMENT for table `registros`
 --
-ALTER TABLE `REGISTROS`
+ALTER TABLE `registros`
   MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -288,16 +294,16 @@ ALTER TABLE `asignaturas`
   ADD CONSTRAINT `asignaturas_ibfk_1` FOREIGN KEY (`num_emp`) REFERENCES `docentes` (`num_emp`);
 
 --
--- Constraints for table `registroAlumno`
+-- Constraints for table `registroalumno`
 --
-ALTER TABLE `registroAlumno`
-  ADD CONSTRAINT `registroAlumno_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `REGISTROS` (`Rg_id`),
+ALTER TABLE `registroalumno`
+  ADD CONSTRAINT `registroAlumno_ibfk_1` FOREIGN KEY (`reg_id`) REFERENCES `registros` (`Rg_id`),
   ADD CONSTRAINT `registroAlumno_ibfk_2` FOREIGN KEY (`ncont`) REFERENCES `alumnos` (`ncont`);
 
 --
--- Constraints for table `REGISTROS`
+-- Constraints for table `registros`
 --
-ALTER TABLE `REGISTROS`
+ALTER TABLE `registros`
   ADD CONSTRAINT `REGISTROS_ibfk_1` FOREIGN KEY (`aula_id`) REFERENCES `aulas` (`aulaID`),
   ADD CONSTRAINT `REGISTROS_ibfk_2` FOREIGN KEY (`asig_id`) REFERENCES `asignaturas` (`asig_id`),
   ADD CONSTRAINT `REGISTROS_ibfk_3` FOREIGN KEY (`num_emp`) REFERENCES `docentes` (`num_emp`),
