@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 17, 2018 at 06:53 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Host: localhost
+-- Generation Time: Apr 17, 2018 at 02:46 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -218,9 +218,9 @@ CREATE TRIGGER `insertRegistroAlumnos` AFTER INSERT ON `registroalumno` FOR EACH
 declare genero varchar(8);
 SELECT sexo from alumnos where alumnos.ncont = NEW.ncont into genero;
 if(genero = 'h') then 
-update REGISTROS set sexoh = sexoh + 1;
+update registros set sexoh = sexoh + 1;
 elseif(genero = 'm') then 
-update REGISTROS set sexom = sexom +1;
+update registros set sexom = sexom +1;
 end IF;
 end
 $$
@@ -313,7 +313,7 @@ ALTER TABLE `registros`
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
