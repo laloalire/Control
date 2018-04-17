@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 17, 2018 at 04:49 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Host: localhost
+-- Generation Time: Apr 17, 2018 at 04:45 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,8 +40,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getLista` (`reg_idd` NUMERIC)  begi
 select concat (alumnos.ap ," ",alumnos.am, " ",alumnos.Nombre) 'Nombre' from alumnos, registroalumno where registroalumno.ncont=alumnos.ncont and registroalumno.reg_id=reg_idd;
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getRegistros` (`num_empp` NUMERIC, `fechainicio` DATE, `fechafin` DATE)  BEGIN
-select rg_id from registros where doc_id=num_empp and fecha between fechainicio and fechafin;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getRegistros` (IN `num_empp` INT, IN `fechainicio` DATE, IN `fechafin` DATE)  BEGIN
+select rg_id from registros where num_emp=num_empp and fecha between fechainicio and fechafin;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BEGIN

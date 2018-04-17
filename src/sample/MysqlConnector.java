@@ -110,10 +110,26 @@ public class MysqlConnector {
     }
 
     public ArrayList<String> getRegistros(String numEmp, String fechainicio, String fechafin) {
-        String consulta = "call getRegistros("+ numEmp +","+fechainicio+", "+fechafin+")";
+        String consulta = "call getRegistros("+ numEmp +",'"+fechainicio+"', '"+fechafin+"')";
         return  consultaAArrayList(consulta);
     }
 
-
+    public ArrayList<String> getListaDatos(String idRegistro) {
+        String consulta = "call getDatosLista("+idRegistro+")";
+        ArrayList<String> respuesta = new ArrayList<>();
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                respuesta.add(rs.getString(1));
+                respuesta.add(rs.getString(2));
+                respuesta.add(rs.getString(3));
+                respuesta.add(rs.getString(4));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return respuesta;
+    }
 }
 

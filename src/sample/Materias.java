@@ -112,7 +112,6 @@ public class Materias extends Application{
                     stage.hide();
                 });
         }
-
         Scene scene  = new Scene(anchor);
         stage.setScene(scene);
         stage.show();
@@ -135,20 +134,18 @@ public class Materias extends Application{
         if(fechas[0] == null){
             return;
         }
-        System.out.println(fechas[0] +" " + fechas[1]);
-       // ArrayList<String> registrosId=  sql.getRegistros(numEmp, fechas[1], fechas[0] );
+       ArrayList<String> registrosId=  sql.getRegistros(numEmp, fechas[1], fechas[0]);
 
         Document reporte = new Document(PageSize.LETTER);
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
         File file =fileChooser.showSaveDialog(null);
-
+        ArrayList<String> datosLista = sql.getListaDatos(registrosId.get(0));
         try {
             if(file != null) {
                 PdfWriter.getInstance(reporte, new FileOutputStream(file));
                 reporte.open();
-                Paragraph titulo =new Paragraph("lel pidief");
-                reporte.add(titulo);
+                reporte.add(new Paragraph());
                 reporte.close();
             }
 
@@ -190,10 +187,10 @@ public class Materias extends Application{
         return  fechas;
     }
 
-    private void modificarVarFecha(DateFormat formatFecha, Stage stage, int month) {
+    private void modificarVarFecha(DateFormat formatFecha, Stage stage, int lapso) {
         Calendar cal = Calendar.getInstance();
         fechas[0] = formatFecha.format(cal.getTime());
-        cal.add(month, -1);
+        cal.add(lapso, -1);
         fechas[1] = formatFecha.format(cal.getTime());
         stage.hide();
     }
