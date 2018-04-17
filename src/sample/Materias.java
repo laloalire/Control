@@ -159,8 +159,10 @@ public class Materias extends Application{
                     header.addCell("Carrera: " + datosLista.get(2));
                     header.addCell("Grupo: " + datosLista.get(3));
                     reporte.add(header);
-                    for (String alumno : listaAlumnos) {
-                        reporte.add(new Paragraph(alumno));
+
+                    for (int i = 0; i < listaAlumnos.size(); i++) {
+                        String alumno = listaAlumnos.get(i);
+                        reporte.add(new Paragraph((1+i)+" - "+alumno));
                     }
                     reporte.close();
                 }
