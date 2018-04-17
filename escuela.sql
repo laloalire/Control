@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2018 at 03:40 AM
+-- Generation Time: Apr 17, 2018 at 04:49 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -28,6 +28,17 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `clasesEnCurso` ()  NO SQL
 select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from REGISTROS, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and REGISTROS.num_emp = D.num_emp and REGISTROS.asig_id = A.asig_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDatosLista` (`reg_idd` NUMERIC)  BEGIN
+select registros.fecha, asignaturas.nomb, carreras.nombre,grupo
+from registros,asignaturas,carreras,alumnos where 
+registros.rg_id=reg_idd and asignaturas.asig_id=registros.asig_id and carreras.carr_id=registros.carr_id and
+alumnos.ncont=(select ncont from registroalumno,registros where registroalumno.reg_id=registros.rg_id limit 1);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getLista` (`reg_idd` NUMERIC)  begin
+select concat (alumnos.ap ," ",alumnos.am, " ",alumnos.Nombre) 'Nombre' from alumnos, registroalumno where registroalumno.ncont=alumnos.ncont and registroalumno.reg_id=reg_idd;
+end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getRegistros` (`num_empp` NUMERIC, `fechainicio` DATE, `fechafin` DATE)  BEGIN
 select rg_id from registros where doc_id=num_empp and fecha between fechainicio and fechafin;
@@ -60,18 +71,27 @@ CREATE TABLE `alumnos` (
   `ncont` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `carr_id` decimal(2,0) DEFAULT NULL,
   `sexo` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `grupo` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL
+  `grupo` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Ap` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Am` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Nombre` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `alumnos`
 --
 
-INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`, `grupo`) VALUES
-('15CG0110', '1', 'm', ''),
-('15CG0146', '1', 'H', '6AM'),
-('15CG0192', '2', 'm', ''),
-('15CG0199', '1', 'h', '');
+INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`, `grupo`, `Ap`, `Am`, `Nombre`) VALUES
+('15CG0011', '1', 'M', '6AM', 'PEÑA', 'RAMIREZ', 'YADIRA'),
+('15CG0012', '1', 'H', '6AM', 'SILVEIRA', 'HINOJOS', 'CARLOS ALBERTO'),
+('15CG0013', '1', 'M', '6AM', 'VENEGAS', 'VALDEZ', 'MARIANA'),
+('15CG0034', '1', 'H', '6AM', 'ACOSTA', 'TREVIZO', 'RUBEN ARMANDO'),
+('15CG0035', '1', 'H', '6AM', 'ALONSO', 'ARAGON', 'BRENDA JOANNA'),
+('15CG0036', '1', 'M', '6AM', 'ESTALA', 'ENRIQUEZ', 'PAUL ALBERTO'),
+('15CG0110', '1', 'm', '6AM', 'GARCIA', 'RAMIREZ', 'GERARDO'),
+('15CG0146', '1', 'H', '6AM', 'CHAPARRO', 'ALIRE', 'EDUARDO'),
+('15CG0192', '2', 'm', '6AM', 'ALVAREZ', 'MARTINEZ', 'MIGUEL ANGEL'),
+('15CG0199', '1', 'h', '6AM', 'ESCOBEDO', 'SANCHEZ', 'COSME OMAR');
 
 -- --------------------------------------------------------
 
@@ -173,6 +193,24 @@ CREATE TABLE `registroalumno` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Dumping data for table `registroalumno`
+--
+
+INSERT INTO `registroalumno` (`reg_id`, `ncont`) VALUES
+(1, '15CG0146'),
+(1, '15CG0199'),
+(1, '15CG0011'),
+(1, '15CG0012'),
+(1, '15CG0013'),
+(1, '15CG0034'),
+(1, '15CG0035'),
+(1, '15CG0036'),
+(1, '15CG0110'),
+(1, '15CG0146'),
+(1, '15CG0192'),
+(1, '15CG0199');
+
+--
 -- Triggers `registroalumno`
 --
 DELIMITER $$
@@ -212,7 +250,7 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
-(1, '0', '0', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
+(1, '7', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
 
 --
 -- Indexes for dumped tables
