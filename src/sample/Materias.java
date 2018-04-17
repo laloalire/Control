@@ -9,6 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -18,9 +20,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 
 public class Materias extends Application{
@@ -117,6 +123,21 @@ public class Materias extends Application{
         launch(args);
     }
     public void generarReporte() {
+        MysqlConnector sql = null;
+        try {
+            sql = new MysqlConnector();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.fechas[0] = null;
+        this.fechas[1] = null;
+        String[] fechas = seleccionarLapso();
+        if(fechas[0] == null){
+            return;
+        }
+        System.out.println(fechas[0] +" " + fechas[1]);
+       // ArrayList<String> registrosId=  sql.getRegistros(numEmp, fechas[1], fechas[0] );
+
         Document reporte = new Document(PageSize.LETTER);
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
@@ -137,6 +158,44 @@ public class Materias extends Application{
             new Alert(Alert.AlertType.ERROR, "No se pudo leer el archivo. Otra aplicacion pude estarlo utilizando").show();
             e.printStackTrace();
         }
+    }
+
+    private String[] fechas= {null, null};
+    private String[] seleccionarLapso() {
+        final DateFormat formatFecha = new SimpleDateFormat("yyyy/MM/dd");
+        VBox root = new VBox();
+        Label texto = new Label("Seleccione el periodo de listas de asistencias");
+        texto.getStyleClass().add("labelListas");
+        Button btnDia = new Button("Dia");
+        Button btnSemana = new Button("Semana");
+        Button btnMes = new Button("Mes");
+        btnDia.setPrefSize(300, 100);
+        btnSemana.setPrefSize(300, 100);
+        btnMes.setPrefSize(300, 100);
+        root.getStylesheets().add("thisnuts.css");
+        btnDia.getStyleClass().add("btnMateria");
+        btnMes.getStyleClass().add("btnMateria");
+        btnSemana.getStyleClass().add("btnMateria");
+        root.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(texto, btnDia, btnSemana, btnMes);
+        root.setSpacing(5);
+        root.setPadding(new Insets(5));
+        Scene esena = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(esena);
+        btnDia.setOnAction(actionEvent -> modificarVarFecha(formatFecha, stage, Calendar.DAY_OF_MONTH));
+        btnSemana.setOnAction(actionEvent ->  modificarVarFecha(formatFecha, stage, Calendar.WEEK_OF_MONTH));
+        btnMes.setOnAction(actionEvent -> modificarVarFecha(formatFecha, stage, Calendar.MONTH));
+        stage.showAndWait();
+        return  fechas;
+    }
+
+    private void modificarVarFecha(DateFormat formatFecha, Stage stage, int month) {
+        Calendar cal = Calendar.getInstance();
+        fechas[0] = formatFecha.format(cal.getTime());
+        cal.add(month, -1);
+        fechas[1] = formatFecha.format(cal.getTime());
+        stage.hide();
     }
 
 }

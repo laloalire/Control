@@ -92,6 +92,10 @@ public class MysqlConnector {
 
     public ArrayList<String> aulasDisponibles (){
         String consulta = "select  aulaid  from  aulas  where  aulaid  not in  ( select  aula_id  from REGISTROS  where  fecha  = CURDATE()  and  entrada <  CURTIME()  and salida > CURTIME());";
+        return  consultaAArrayList(consulta);
+    }
+
+    private ArrayList<String > consultaAArrayList(String consulta) {
         ArrayList<String> respuesta = new ArrayList<>();
         try {
             CallableStatement st = connection.prepareCall(consulta);
@@ -102,9 +106,13 @@ public class MysqlConnector {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  respuesta;
+        return respuesta;
     }
 
+    public ArrayList<String> getRegistros(String numEmp, String fechainicio, String fechafin) {
+        String consulta = "call getRegistros("+ numEmp +","+fechainicio+", "+fechafin+")";
+        return  consultaAArrayList(consulta);
+    }
 
 
 }
