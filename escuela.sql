@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 17, 2018 at 04:45 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 17, 2018 at 06:53 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -101,7 +101,7 @@ INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`, `grupo`, `Ap`, `Am`, `Nombre`
 
 CREATE TABLE `asignaturas` (
   `asig_id` decimal(2,0) NOT NULL,
-  `nomb` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nomb` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `num_emp` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -110,12 +110,12 @@ CREATE TABLE `asignaturas` (
 --
 
 INSERT INTO `asignaturas` (`asig_id`, `nomb`, `num_emp`) VALUES
-('0', 'POO', 12347),
-('1', 'Ingenieria de Softwa', 12348),
+('0', 'Programacion orientada a objetos', 12347),
+('1', 'Ingenieria de Software', 12348),
 ('2', 'Administracion de BD', 12346),
 ('3', 'Lenguajes Automatas ', 12347),
 ('4', 'Redes y conmutacion', 12345),
-('6', 'Topicos A. P.', 12347);
+('6', 'Topicos Avanzados de Programacion', 12347);
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ INSERT INTO `aulas` (`aulaID`) VALUES
 
 CREATE TABLE `carreras` (
   `carr_id` decimal(2,0) NOT NULL,
-  `nombre` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `nombre` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -153,10 +153,10 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`carr_id`, `nombre`) VALUES
-('1', 'Ingenieria en sistem'),
-('2', 'Ingenieria industria'),
-('3', 'Ingenieria en gestio'),
-('4', 'Ingenieria en mecatr');
+('1', 'Ingenieria en sistemas computacionales'),
+('2', 'Ingenieria industrial'),
+('3', 'Ingenieria en gestion empresarial'),
+('4', 'Ingenieria en mecatronica');
 
 -- --------------------------------------------------------
 
