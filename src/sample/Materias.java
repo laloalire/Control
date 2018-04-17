@@ -144,13 +144,17 @@ public class Materias extends Application{
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
         File file =fileChooser.showSaveDialog(null);
+        try {
+            PdfWriter.getInstance(reporte, new FileOutputStream(file));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        reporte.open();
         for(String registroId: registrosId) {
             ArrayList<String> datosLista = sql.getListaDatos(registroId);
             ArrayList<String> listaAlumnos = sql.getListaAlumnos(registroId);
             try {
                 if (file != null) {
-                    PdfWriter.getInstance(reporte, new FileOutputStream(file));
-                    reporte.open();
                     PdfPTable header = new PdfPTable(4);
                     header.setWidthPercentage(100);
                     header.setWidths(new int[]{1, 1, 1, 1});
@@ -164,16 +168,14 @@ public class Materias extends Application{
                         String alumno = listaAlumnos.get(i);
                         reporte.add(new Paragraph((1+i)+" - "+alumno));
                     }
-                    reporte.close();
+                    reporte.newPage();
                 }
 
             } catch (DocumentException e) {
                 e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                new Alert(Alert.AlertType.ERROR, "No se pudo leer el archivo. Otra aplicacion pude estarlo utilizando").show();
-                e.printStackTrace();
             }
         }
+        reporte.close();
     }
 
     private String[] fechas= {null, null};
