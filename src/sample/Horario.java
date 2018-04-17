@@ -33,6 +33,11 @@ public class Horario extends Application {
         ImageView Imagen = new ImageView("/Imagenes/header.png");
         ImageView FlechaArriba = new ImageView("/Imagenes/UP.png");
         ImageView FlechaAbajo = new ImageView("/Imagenes/DOWN.png");
+        ImageView FlechaArriba1 = new ImageView("/Imagenes/UP.png");
+        ImageView FlechaAbajo1 = new ImageView("/Imagenes/DOWN.png");
+        ImageView Horamas = new ImageView("/Imagenes/Hora.png");
+        ImageView Horamenos = new ImageView("/Imagenes/Hora2.png");
+
 
 
         anchor.setPrefSize(720, 480);
@@ -44,7 +49,7 @@ public class Horario extends Application {
 
         //Centro botones y texto
         BorderPane Centro = new BorderPane();
-        Centro.setPadding(new Insets(15,0,15,500));
+        Centro.setPadding(new Insets(15,0,15,100));
 
         Button btnUP = new Button();
         Button btnDown = new Button();
@@ -56,7 +61,7 @@ public class Horario extends Application {
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
         cantidad.setFont(new Font("Arial",100));
-        cantidad.setPadding(new Insets(0,0,0,200));
+        cantidad.setPadding(new Insets(0,0,0,0));
 
         //cantidad.setLayoutX(10);
         //cantidad.setLayoutY(10);
@@ -66,7 +71,7 @@ public class Horario extends Application {
 
         //Lado derecho del border Clases
         VBox salones = new VBox();
-        salones.setPadding(new Insets(50,400,50,0));
+        salones.setPadding(new Insets(50,100,50,0));
         salones.setAlignment(Pos.CENTER);
         salones.setSpacing(20);
         for(String aula : aulasDisponibles){
@@ -89,7 +94,55 @@ public class Horario extends Application {
         cen.getChildren().add(cantidad);
         //cen.getChildren().add(aceptar);
         Border.setLeft(Centro);
-        Border.setCenter(null);
+        //Border.setCenter(null);
+
+
+
+        //Border centro poner salones
+        Label Canti = new Label();
+        BorderPane Horas = new BorderPane();
+        Border.setCenter(Horas);
+        HBox boton = new HBox();
+        HBox boton1 = new HBox();
+        Button mas = new Button();
+        Button menos = new Button();
+        Horas.setTop(boton);
+        boton.setAlignment(Pos.CENTER);
+        Horas.setBottom(boton1);
+        boton1.setAlignment(Pos.CENTER);
+        boton1.getChildren().add(menos);
+        boton.getChildren().add(mas);
+        Horas.setPadding(new Insets(15,200,15,0));
+        Horas.setCenter(Canti);
+        Canti.setText("1");
+        Canti.setAlignment(Pos.CENTER);
+        Canti.setStyle("-fx-background-color: #ffffff;");
+        Canti.setFont(new Font("Arial",100));
+        mas.setGraphic(FlechaArriba1);
+        menos.setGraphic(FlechaAbajo1);
+
+        //Border centro lado derecho AM Y PM
+        VBox tiempo = new VBox();
+        tiempo.setAlignment(Pos.CENTER_RIGHT);
+        Label tiempoo = new Label();
+        tiempoo.setText("AM");
+        tiempoo.setAlignment(Pos.CENTER);
+        tiempoo.setStyle("-fx-background-color: #ffffff;");
+        tiempoo.setFont(new Font("Arial",70));
+        tiempo.setAlignment(Pos.CENTER);
+        tiempo.setSpacing(15);
+        Button mass = new Button();
+        Button menoss = new Button();
+        tiempo.getChildren().add(mass);
+        tiempo.getChildren().add(tiempoo);
+        tiempo.getChildren().add(menoss);
+        Horas.setRight(tiempo);
+
+        mass.setGraphic(Horamas);
+        menoss.setGraphic(Horamenos);
+
+
+
         Centro.setTop(Top);
         Centro.setBottom(Buttom);
         Border.setRight(salones);
@@ -115,20 +168,26 @@ public class Horario extends Application {
         });
 
         //Agrandar botones y label
-        btnUP.prefHeightProperty().bind(Border.heightProperty().divide(4));
-        btnUP.prefWidthProperty().bind(Border.widthProperty().divide(4));
+        btnUP.prefHeightProperty().bind(Border.heightProperty().divide(5));
+        btnUP.prefWidthProperty().bind(Border.widthProperty().divide(5));
 
-        btnDown.prefHeightProperty().bind(Border.heightProperty().divide(4));
-        btnDown.prefWidthProperty().bind(Border.widthProperty().divide(4));
+        btnDown.prefHeightProperty().bind(Border.heightProperty().divide(5));
+        btnDown.prefWidthProperty().bind(Border.widthProperty().divide(5));
 
         aceptar.prefHeightProperty().bind(Border.heightProperty().divide(6));
         aceptar.prefWidthProperty().bind(Border.widthProperty().divide(6));
 
-        cantidad.prefHeightProperty().bind(Border.heightProperty().divide(6));
-        cantidad.prefWidthProperty().bind(Border.widthProperty().divide(6));
+        cantidad.prefHeightProperty().bind(Border.heightProperty().divide(5));
+        cantidad.prefWidthProperty().bind(Border.widthProperty().divide(5));
 
+        mas.prefHeightProperty().bind(Border.heightProperty().divide(5));
+        mas.prefWidthProperty().bind(Border.widthProperty().divide(5));
 
+        menos.prefHeightProperty().bind(Border.heightProperty().divide(5));
+        menos.prefWidthProperty().bind(Border.widthProperty().divide(5));
 
+        Canti.prefHeightProperty().bind(Border.heightProperty().divide(5));
+        Canti.prefWidthProperty().bind(Border.widthProperty().divide(5));
 
 
         Border.setStyle("-fx-background-color: #745e8e;");
