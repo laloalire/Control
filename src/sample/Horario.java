@@ -15,9 +15,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.omg.PortableServer.POA;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class Horario extends Application {
@@ -63,7 +66,7 @@ public class Horario extends Application {
         Label cantidad = new Label();
         HoraUP.setGraphic(FlechaArriba);
         HoraDown.setGraphic(FlechaAbajo);
-        cantidad.setText("1");
+
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
         cantidad.setFont(new Font("Arial",100));
@@ -84,9 +87,23 @@ public class Horario extends Application {
         Horas.setAlignment(Pos.CENTER);
 
         //Tiempo
+        Calendar calendario=Calendar.getInstance();
+        int hour=calendario.get(Calendar.HOUR);
+        cantidad.setText(hour+"");
         Button btnMenos = new Button();
         Button btnMas = new Button();
         Label cantidad2 = new Label();
+        btnMas.setOnAction(Event->{
+            if(cantidad2.getText()=="AM"){
+                cantidad2.setText("PM");
+            }
+        });
+
+        btnMenos.setOnAction(Event->{
+            if(cantidad2.getText()=="PM"){
+                cantidad2.setText("AM");
+            }
+        });
         btnMenos.setGraphic(Horamas);
         btnMas.setGraphic(Horamenos);
         cantidad2.setText("AM");
