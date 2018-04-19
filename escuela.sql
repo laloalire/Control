@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 17, 2018 at 02:46 PM
+-- Generation Time: Apr 19, 2018 at 07:02 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.4
 
@@ -27,7 +27,7 @@ DELIMITER $$
 -- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `clasesEnCurso` ()  NO SQL
-select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from REGISTROS, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and REGISTROS.num_emp = D.num_emp and REGISTROS.asig_id = A.asig_id$$
+select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from registros, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and registros.num_emp = D.num_emp and registros.asig_id = A.asig_id$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getDatosLista` (`reg_idd` NUMERIC)  BEGIN
 select registros.fecha, asignaturas.nomb, carreras.nombre,grupo
@@ -313,7 +313,7 @@ ALTER TABLE `registros`
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
