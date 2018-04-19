@@ -62,24 +62,24 @@ public class Horario extends Application {
         HoraUP.setGraphic(FlechaArriba);
         HoraDown.setGraphic(FlechaAbajo);
         HoraUP.setOnAction(actionEvent -> {
-            int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0])  + 1;
-            if(nuevaCant == 13) {
+            int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0]) + 1;
+            if (nuevaCant == 13) {
                 nuevaCant = 1;
             }
-            cantidad.setText(nuevaCant+":00");
+            cantidad.setText(nuevaCant + ":00");
         });
         HoraDown.setOnAction(actionEvent -> {
             int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0]) - 1;
-            if(nuevaCant == 0) {
+            if (nuevaCant == 0) {
                 nuevaCant = 12;
             }
-            cantidad.setText(nuevaCant+":00");
+            cantidad.setText(nuevaCant + ":00");
         });
 
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
-        cantidad.setFont(new Font("Arial",90));
-        Hora.getChildren().addAll(HoraUP,cantidad,HoraDown);
+        cantidad.setFont(new Font("Arial", 90));
+        Hora.getChildren().addAll(HoraUP, cantidad, HoraDown);
         Hora.setAlignment(Pos.CENTER);
 
         //Horas
@@ -91,18 +91,18 @@ public class Horario extends Application {
         cantidad1.setText("1");
         cantidad1.setAlignment(Pos.CENTER);
         cantidad1.setStyle("-fx-background-color: #ffffff;");
-        cantidad1.setFont(new Font("Arial",100));
-        Horas.getChildren().addAll(btnUP,cantidad1,btnDown);
+        cantidad1.setFont(new Font("Arial", 100));
+        Horas.getChildren().addAll(btnUP, cantidad1, btnDown);
         Horas.setAlignment(Pos.CENTER);
 
         //Tiempo
-        Calendar calendario=Calendar.getInstance();
-        int hour=calendario.get(Calendar.HOUR);
-        cantidad.setText(hour+":00");
+        Calendar calendario = Calendar.getInstance();
+        int hour = calendario.get(Calendar.HOUR);
+        cantidad.setText(hour + ":00");
         Button btnMenos = new Button();
         Button btnMas = new Button();
         Label cantidad2 = new Label();
-        EventHandler<ActionEvent> cambiarAMFM = Event-> {
+        EventHandler<ActionEvent> cambiarAMFM = Event -> {
             if (cantidad2.getText().equals("AM")) {
                 cantidad2.setText("PM");
             } else {
@@ -116,8 +116,8 @@ public class Horario extends Application {
         cantidad2.setText("AM");
         cantidad2.setAlignment(Pos.CENTER);
         cantidad2.setStyle("-fx-background-color: #ffffff;");
-        cantidad2.setFont(new Font("Arial",100));
-        Timepo.getChildren().addAll(btnMenos,cantidad2,btnMas);
+        cantidad2.setFont(new Font("Arial", 100));
+        Timepo.getChildren().addAll(btnMenos, cantidad2, btnMas);
         Timepo.setAlignment(Pos.CENTER);
 
         //Salones disponibles
@@ -137,24 +137,17 @@ public class Horario extends Application {
 
         //Border centro poner salones
 
-        btnUP.setOnAction(Event ->{
-        int cactual=Integer.parseInt(cantidad1.getText());
-        if(Integer.parseInt(cantidad1.getText())>=1 && Integer.parseInt(cantidad1.getText())<4 ){
-        cantidad1.setText(cactual+1+"");
-        }else{
-
-        }
-
-
+        btnUP.setOnAction(Event -> {
+            int cactual = Integer.parseInt(cantidad1.getText());
+            if (Integer.parseInt(cantidad1.getText()) >= 1 && Integer.parseInt(cantidad1.getText()) < 4) {
+                cantidad1.setText(cactual + 1 + "");
+            }
         });
-        btnDown.setOnAction(Event->{
-        int cactual=Integer.parseInt(cantidad1.getText());
-        if(Integer.parseInt(cantidad1.getText())>1 && Integer.parseInt(cantidad1.getText())<=4 ){
-            cantidad1.setText(cactual-1+"");
-        }else{
-
-        }
-
+        btnDown.setOnAction(Event -> {
+            int cactual = Integer.parseInt(cantidad1.getText());
+            if (Integer.parseInt(cantidad1.getText()) > 1 && Integer.parseInt(cantidad1.getText()) <= 4) {
+                cantidad1.setText(cactual - 1 + "");
+            }
         });
 
         AnchorPane.setTopAnchor(Border, 0.0);
@@ -164,7 +157,7 @@ public class Horario extends Application {
 
         //Centro
         Border.setCenter(todo);
-        todo.getChildren().addAll(Hora,Horas,Timepo);
+        todo.getChildren().addAll(Hora, Horas, Timepo);
         Hora.setSpacing(40);
         Horas.setSpacing(40);
         Timepo.setSpacing(40);
@@ -198,24 +191,24 @@ public class Horario extends Application {
         anchor.getChildren().add(Border);
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
-        }
+    }
 
     public Horario(String numempleado, String idmateria) {
-            this.numempleado = numempleado;
-            this.idmateria = idmateria;
-            MysqlConnector sql = null;
-            try {
-                sql = new MysqlConnector();
-                ArrayList<String> aulasDisponibles = sql.aulasDisponibles();
-                this.aulasDisponibles = aulasDisponibles;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-
+        this.numempleado = numempleado;
+        this.idmateria = idmateria;
+        MysqlConnector sql = null;
+        try {
+            sql = new MysqlConnector();
+            ArrayList<String> aulasDisponibles = sql.aulasDisponibles();
+            this.aulasDisponibles = aulasDisponibles;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
+
+    }
 
     public static void main(String[] args) {
         Platform.runLater(() -> new Horario("s", "s").start(new Stage()));
