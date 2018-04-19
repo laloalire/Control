@@ -2,22 +2,17 @@ package sample;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import org.omg.PortableServer.POA;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,17 +88,15 @@ public class Horario extends Application {
         Button btnMenos = new Button();
         Button btnMas = new Button();
         Label cantidad2 = new Label();
-        btnMas.setOnAction(Event->{
-            if(cantidad2.getText()=="AM"){
+        EventHandler<ActionEvent> cambiarAMFM = Event-> {
+            if (cantidad2.getText().equals("AM")) {
                 cantidad2.setText("PM");
-            }
-        });
-
-        btnMenos.setOnAction(Event->{
-            if(cantidad2.getText()=="PM"){
+            } else {
                 cantidad2.setText("AM");
             }
-        });
+        };
+        btnMas.setOnAction(cambiarAMFM);
+        btnMenos.setOnAction(cambiarAMFM);
         btnMenos.setGraphic(Horamas);
         btnMas.setGraphic(Horamenos);
         cantidad2.setText("AM");
