@@ -61,10 +61,24 @@ public class Horario extends Application {
         Label cantidad = new Label();
         HoraUP.setGraphic(FlechaArriba);
         HoraDown.setGraphic(FlechaAbajo);
+        HoraUP.setOnAction(actionEvent -> {
+            int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0])  + 1;
+            if(nuevaCant == 13) {
+                nuevaCant = 1;
+            }
+            cantidad.setText(nuevaCant+":00");
+        });
+        HoraDown.setOnAction(actionEvent -> {
+            int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0]) - 1;
+            if(nuevaCant == 0) {
+                nuevaCant = 12;
+            }
+            cantidad.setText(nuevaCant+":00");
+        });
 
         cantidad.setAlignment(Pos.CENTER);
         cantidad.setStyle("-fx-background-color: #ffffff;");
-        cantidad.setFont(new Font("Arial",100));
+        cantidad.setFont(new Font("Arial",90));
         Hora.getChildren().addAll(HoraUP,cantidad,HoraDown);
         Hora.setAlignment(Pos.CENTER);
 
@@ -84,7 +98,7 @@ public class Horario extends Application {
         //Tiempo
         Calendar calendario=Calendar.getInstance();
         int hour=calendario.get(Calendar.HOUR);
-        cantidad.setText(hour+"");
+        cantidad.setText(hour+":00");
         Button btnMenos = new Button();
         Button btnMas = new Button();
         Label cantidad2 = new Label();
