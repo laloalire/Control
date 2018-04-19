@@ -91,7 +91,7 @@ public class MysqlConnector {
     }
 
     public ArrayList<String> aulasDisponibles (){
-        String consulta = "select  aulaid  from  aulas  where  aulaid  not in  ( select  aula_id  from REGISTROS  where  fecha  = CURDATE()  and  entrada <  CURTIME()  and salida > CURTIME());";
+        String consulta = "select  aulaid  from  aulas  where  aulaid  not in  ( select  aula_id  from registros  where  fecha  = CURDATE()  and  entrada <  CURTIME()  and salida > CURTIME());";
         return  consultaAArrayList(consulta);
     }
 

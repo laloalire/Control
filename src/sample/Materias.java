@@ -144,6 +144,9 @@ public class Materias extends Application{
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
         File file =fileChooser.showSaveDialog(null);
+        if(file==null){
+            return;
+        }
         try {
             PdfWriter.getInstance(reporte, new FileOutputStream(file));
         } catch (Exception e) {
