@@ -117,15 +117,17 @@ public class Horario extends Application {
         Button btnMenos = new Button();
         Button btnMas = new Button();
         Label cantidad2 = new Label();
-        EventHandler<ActionEvent> cambiarAMFM = Event -> {
-            if (cantidad2.getText().equals("AM")) {
+        btnMas.setOnAction(Event->{
+            if(cantidad2.getText()=="AM"){
                 cantidad2.setText("PM");
-            } else {
+            }
+        });
+
+        btnMenos.setOnAction(Event->{
+            if(cantidad2.getText()=="PM"){
                 cantidad2.setText("AM");
             }
-        };
-        btnMas.setOnAction(cambiarAMFM);
-        btnMenos.setOnAction(cambiarAMFM);
+        });
         btnMenos.setGraphic(Horamas);
         btnMas.setGraphic(Horamenos);
         cantidad2.setText("AM");
@@ -153,7 +155,6 @@ public class Horario extends Application {
             btnAula.setOnAction(event -> {
                 String horaInicio = cantidad.getText();
                 int fin = Integer.parseInt(horaInicio.split(":")[0]) + Integer.parseInt(cantidad1.getText());
-
                 String horaFin =  fin + ":00";
                 Alert alerta = new Alert(Alert.AlertType.CONFIRMATION, "Hora Inicio: "+ horaInicio +  " \nHora Fin: "+horaFin+"\nAula: "+btnAula.getText());
                 alerta.setHeaderText("Se creara una clase con las siguiente infomación");
