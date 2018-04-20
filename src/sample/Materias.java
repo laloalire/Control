@@ -187,7 +187,7 @@ public class Materias extends Application{
         VBox root = new VBox();
         Label texto = new Label("Seleccione el periodo de listas de asistencias");
         texto.getStyleClass().add("labelListas");
-        Button btnDia = new Button("Dia");
+        Button btnDia = new Button("Día");
         Button btnSemana = new Button("Semana");
         Button btnMes = new Button("Mes");
         btnDia.setPrefSize(300, 100);
