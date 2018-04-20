@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -126,6 +127,15 @@ public class Horario extends Application {
             Salones.getChildren().add(btnAula);
             btnAula.prefHeightProperty().bind(Border.heightProperty().divide(6));
             btnAula.prefWidthProperty().bind(Border.widthProperty().divide(6));
+            btnAula.setOnAction(event -> {
+                String horaInicio = cantidad.getText();
+                int fin = Integer.parseInt(horaInicio.split(":")[0]) + Integer.parseInt(cantidad1.getText());
+
+                String horaFin =  fin + ":00";
+                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION, "Hora Inicio: "+ horaInicio +  " \nHora Fin: "+horaFin+"\nAula: "+btnAula.getText());
+                alerta.setHeaderText("Se creara una clase con las siguiente infomación");
+                alerta.show();
+            });
         }
         Salones.setSpacing(20);
         Salones.setAlignment(Pos.CENTER);
