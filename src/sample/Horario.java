@@ -90,7 +90,7 @@ public class Horario extends Application {
 
         //Horas
         Label HoraS1 = new Label();
-        HoraS1.setText("Duracion de la clase (Horas)");
+        HoraS1.setText("Duración de la clase (Horas)");
         HoraS1.setTextFill(Color.WHITE);
         HoraS1.setFont(new Font("Arial",20));
         Button btnUP = new Button();
