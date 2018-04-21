@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 
 
 public class Horario extends Application {
@@ -65,28 +67,28 @@ public class Horario extends Application {
         HoraS.setFont(new Font("Arial",20));
         Button HoraUP = new Button();
         Button HoraDown = new Button();
-        Label cantidad = new Label();
+        Label lblHora = new Label();
         HoraUP.setGraphic(FlechaArriba);
         HoraDown.setGraphic(FlechaAbajo);
         HoraUP.setOnAction(actionEvent -> {
-            int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0]) + 1;
+            int nuevaCant = Integer.parseInt(lblHora.getText().split(":")[0]) + 1;
             if (nuevaCant == 13) {
                 nuevaCant = 1;
             }
-            cantidad.setText(nuevaCant + ":00");
+            lblHora.setText(nuevaCant + ":00");
         });
         HoraDown.setOnAction(actionEvent -> {
-            int nuevaCant = Integer.parseInt(cantidad.getText().split(":")[0]) - 1;
+            int nuevaCant = Integer.parseInt(lblHora.getText().split(":")[0]) - 1;
             if (nuevaCant == 0) {
                 nuevaCant = 12;
             }
-            cantidad.setText(nuevaCant + ":00");
+            lblHora.setText(nuevaCant + ":00");
         });
 
-        cantidad.setAlignment(Pos.CENTER);
-        cantidad.setStyle("-fx-background-color: #ffffff;");
-        cantidad.setFont(new Font("Arial", 90));
-        Hora.getChildren().addAll(HoraS,HoraUP, cantidad, HoraDown);
+        lblHora.setAlignment(Pos.CENTER);
+        lblHora.setStyle("-fx-background-color: #ffffff;");
+        lblHora.setFont(new Font("Arial", 90));
+        Hora.getChildren().addAll(HoraS,HoraUP, lblHora, HoraDown);
         Hora.setAlignment(Pos.CENTER);
 
         //Horas
@@ -96,14 +98,14 @@ public class Horario extends Application {
         HoraS1.setFont(new Font("Arial",20));
         Button btnUP = new Button();
         Button btnDown = new Button();
-        Label cantidad1 = new Label();
+        Label lblCantidadHoras = new Label();
         btnUP.setGraphic(FlechaArriba1);
         btnDown.setGraphic(FlechaAbajo1);
-        cantidad1.setText("1");
-        cantidad1.setAlignment(Pos.CENTER);
-        cantidad1.setStyle("-fx-background-color: #ffffff;");
-        cantidad1.setFont(new Font("Arial", 100));
-        Horas.getChildren().addAll(HoraS1,btnUP, cantidad1, btnDown);
+        lblCantidadHoras.setText("1");
+        lblCantidadHoras.setAlignment(Pos.CENTER);
+        lblCantidadHoras.setStyle("-fx-background-color: #ffffff;");
+        lblCantidadHoras.setFont(new Font("Arial", 100));
+        Horas.getChildren().addAll(HoraS1,btnUP, lblCantidadHoras, btnDown);
         Horas.setAlignment(Pos.CENTER);
 
         //Tiempo
@@ -113,28 +115,28 @@ public class Horario extends Application {
         Horario.setFont(new Font("Arial",20));
         Calendar calendario = Calendar.getInstance();
         int hour = calendario.get(Calendar.HOUR);
-        cantidad.setText(hour + ":00");
+        lblHora.setText(hour + ":00");
         Button btnMenos = new Button();
         Button btnMas = new Button();
-        Label cantidad2 = new Label();
+        Label lblMeridiano = new Label();
         btnMas.setOnAction(Event->{
-            if(cantidad2.getText()=="AM"){
-                cantidad2.setText("PM");
+            if(lblMeridiano.getText()=="AM"){
+                lblMeridiano.setText("PM");
             }
         });
 
         btnMenos.setOnAction(Event->{
-            if(cantidad2.getText()=="PM"){
-                cantidad2.setText("AM");
+            if(lblMeridiano.getText()=="PM"){
+                lblMeridiano.setText("AM");
             }
         });
         btnMenos.setGraphic(Horamas);
         btnMas.setGraphic(Horamenos);
-        cantidad2.setText("AM");
-        cantidad2.setAlignment(Pos.CENTER);
-        cantidad2.setStyle("-fx-background-color: #ffffff;");
-        cantidad2.setFont(new Font("Arial", 100));
-        Timepo.getChildren().addAll(btnMenos, cantidad2, btnMas);
+        lblMeridiano.setText("AM");
+        lblMeridiano.setAlignment(Pos.CENTER);
+        lblMeridiano.setStyle("-fx-background-color: #ffffff;");
+        lblMeridiano.setFont(new Font("Arial", 100));
+        Timepo.getChildren().addAll(btnMenos, lblMeridiano, btnMas);
         Timepo.setAlignment(Pos.CENTER);
         Tiempo2.setAlignment(Pos.CENTER);
         Tiempo2.setSpacing(50);
@@ -153,12 +155,14 @@ public class Horario extends Application {
             btnAula.prefHeightProperty().bind(Border.heightProperty().divide(6));
             btnAula.prefWidthProperty().bind(Border.widthProperty().divide(6));
             btnAula.setOnAction(event -> {
-                String horaInicio = cantidad.getText();
-                int fin = Integer.parseInt(horaInicio.split(":")[0]) + Integer.parseInt(cantidad1.getText());
-                String horaFin =  fin + ":00";
-                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION, "Hora Inicio: "+ horaInicio +  " \nHora Fin: "+horaFin+"\nAula: "+btnAula.getText());
-                alerta.setHeaderText("Se creara una clase con las siguiente infomación");
-                alerta.show();
+                int cantidadHoras = Integer.parseInt(lblCantidadHoras.getText());
+                if (mostrarAlerta(lblHora, lblMeridiano, btnAula, cantidadHoras)) return;
+                int inicio = Integer.parseInt(lblHora.getText().split(":")[0]);
+                if(lblMeridiano.getText().equals("PM")){
+                    inicio += 12;
+                }
+                int fin = inicio + cantidadHoras;
+                insertarRegistro(primaryStage, aula, inicio, fin);
             });
             btnAula.prefHeightProperty().bind(Border.heightProperty().divide(7));
             btnAula.prefWidthProperty().bind(Border.widthProperty().divide(7));
@@ -174,15 +178,15 @@ public class Horario extends Application {
         //Border centro poner salones
 
         btnUP.setOnAction(Event -> {
-            int cactual = Integer.parseInt(cantidad1.getText());
-            if (Integer.parseInt(cantidad1.getText()) >= 1 && Integer.parseInt(cantidad1.getText()) < 4) {
-                cantidad1.setText(cactual + 1 + "");
+            int cactual = Integer.parseInt(lblCantidadHoras.getText());
+            if (Integer.parseInt(lblCantidadHoras.getText()) >= 1 && Integer.parseInt(lblCantidadHoras.getText()) < 4) {
+                lblCantidadHoras.setText(cactual + 1 + "");
             }
         });
         btnDown.setOnAction(Event -> {
-            int cactual = Integer.parseInt(cantidad1.getText());
-            if (Integer.parseInt(cantidad1.getText()) > 1 && Integer.parseInt(cantidad1.getText()) <= 4) {
-                cantidad1.setText(cactual - 1 + "");
+            int cactual = Integer.parseInt(lblCantidadHoras.getText());
+            if (Integer.parseInt(lblCantidadHoras.getText()) > 1 && Integer.parseInt(lblCantidadHoras.getText()) <= 4) {
+                lblCantidadHoras.setText(cactual - 1 + "");
             }
         });
 
@@ -211,14 +215,14 @@ public class Horario extends Application {
         btnDown.prefHeightProperty().bind(Border.heightProperty().divide(7));
         btnDown.prefWidthProperty().bind(Border.widthProperty().divide(7));
 
-        cantidad.prefHeightProperty().bind(Border.heightProperty().divide(7));
-        cantidad.prefWidthProperty().bind(Border.widthProperty().divide(7));
+        lblHora.prefHeightProperty().bind(Border.heightProperty().divide(7));
+        lblHora.prefWidthProperty().bind(Border.widthProperty().divide(7));
 
-        cantidad1.prefHeightProperty().bind(Border.heightProperty().divide(7));
-        cantidad1.prefWidthProperty().bind(Border.widthProperty().divide(7));
+        lblCantidadHoras.prefHeightProperty().bind(Border.heightProperty().divide(7));
+        lblCantidadHoras.prefWidthProperty().bind(Border.widthProperty().divide(7));
 
-        cantidad2.prefHeightProperty().bind(Border.heightProperty().divide(7));
-        cantidad2.prefWidthProperty().bind(Border.widthProperty().divide(7));
+        lblMeridiano.prefHeightProperty().bind(Border.heightProperty().divide(7));
+        lblMeridiano.prefWidthProperty().bind(Border.widthProperty().divide(7));
 
 
         todo.getChildren().addAll(Salones);
@@ -227,6 +231,36 @@ public class Horario extends Application {
         anchor.getChildren().add(Border);
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
+    }
+
+    private void insertarRegistro(Stage primaryStage, String aula, int inicio, int fin) {
+        try {
+            MysqlConnector sql = new MysqlConnector();
+            int aulaid = Integer.parseInt(aula);
+            int asignatura = Integer.parseInt(idmateria);
+            sql.insertarRegistro(inicio+":00", fin+":00", aulaid, asignatura, numempleado);
+            new Alert(Alert.AlertType.INFORMATION, "Clase registrada").showAndWait();
+            new Main().start(new Stage());
+            primaryStage.hide();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean mostrarAlerta(Label lblHora, Label lblMeridiano, Button btnAula, int cantidadHoras) {
+        int horaInicio = Integer.parseInt(lblHora.getText().split(":")[0]);
+        int horaFin = horaInicio + cantidadHoras;
+        String finMeridiano = lblMeridiano.getText();
+        if(horaFin > 12) {
+            horaFin -= 12;
+            finMeridiano = "PM";
+        }else if(horaFin == 12){
+            finMeridiano = "PM";
+        }
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION, "Hora Inicio: "+ horaInicio +  ":00 "+lblMeridiano.getText()+"\nHora Fin: "+horaFin+":00 "+finMeridiano+" \nAula: "+btnAula.getText());
+        alerta.setHeaderText("Se creara una clase con las siguiente infomación");
+        Optional<ButtonType> result  = alerta.showAndWait();
+        return !result.isPresent() || result.get() != ButtonType.OK;
     }
 
     public Horario(String numempleado, String idmateria) {
@@ -238,8 +272,6 @@ public class Horario extends Application {
             ArrayList<String> aulasDisponibles = sql.aulasDisponibles();
             this.aulasDisponibles = aulasDisponibles;
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 

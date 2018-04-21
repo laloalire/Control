@@ -108,7 +108,7 @@ public class Materias extends Application{
                 grid.getChildren().add(btn);
                 final int index = i;
                 btn.setOnAction(actionEvent -> {
-                    new Horario(materias.keySet().toArray()[index]+"", numEmp).start(new Stage());
+                    new Horario(numEmp, materias.keySet().toArray()[index]+"" ).start(new Stage());
                     stage.hide();
                 });
         }

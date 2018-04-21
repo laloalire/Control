@@ -10,7 +10,7 @@ public class MysqlConnector {
 
     private Connection connection;
 
-    public MysqlConnector() throws SQLException, ClassNotFoundException {
+    public MysqlConnector() throws SQLException {
         connection = DriverManager.getConnection("jdbc:mysql://localhost/escuela?user=root");
     }
 
@@ -132,6 +132,20 @@ public class MysqlConnector {
         return respuesta;
     }
 
+    public void insertarRegistro(String entrada, String salida,  int aula, int asignatura, String numEmp){
+        String query = "INSERT INTO registros(sexoh, sexom, fecha, entrada, salida, aula_id, asig_id, num_emp) VALUES (0, 0, now(), ?, ?, ?, ?, ?)";
+        try {
+            CallableStatement st = connection.prepareCall(query);
+            st.setString(1, entrada);
+            st.setString(2, salida);
+            st.setInt(3, aula);
+            st.setInt(4, asignatura);
+            st.setString(5, numEmp);
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public ArrayList<String> getListaAlumnos(String idRegistro) {
         String consulta = "call getLista("+idRegistro+")";
         return  consultaAArrayList(consulta);

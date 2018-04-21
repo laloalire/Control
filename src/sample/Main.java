@@ -72,8 +72,6 @@ public class Main extends Application {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
         });
@@ -103,8 +101,6 @@ public class Main extends Application {
                     new Alert(Alert.AlertType.ERROR, "Comprueba tu información").show();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
