@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 19, 2018 at 07:02 PM
+-- Generation Time: Apr 21, 2018 at 04:36 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.4
 
@@ -49,7 +49,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BE
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarAlumno` (IN `regID` INT, IN `numControl` VARCHAR(8))  NO SQL
-insert into registroAlumno values (regID, numControl)$$
+insert into registroalumno values (regID, numControl)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarAlumno` (IN `numcontrol` VARCHAR(8))  begin 
  DECLARE cuenta int;
@@ -250,7 +250,7 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
-(1, '7', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
+(1, '10', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
 
 --
 -- Indexes for dumped tables
@@ -313,7 +313,7 @@ ALTER TABLE `registros`
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
