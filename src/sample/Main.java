@@ -126,7 +126,7 @@ public class Main extends Application {
 
         //sep.setFitWidth(0.1);
         //sep.setFitWidth(0.1);
-        ImageView imgAdmin=new ImageView("/imagenes/adm.png");
+        ImageView imgAdmin=new ImageView("/Imagenes/adm.png");
         Button admin=new Button();
         admin.prefHeightProperty().bind(pane.heightProperty().divide(100));
         admin.prefWidthProperty().bind(pane.widthProperty().divide(10.1));
