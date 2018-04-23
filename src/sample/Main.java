@@ -35,6 +35,7 @@ public class Main extends Application {
         HBox topima = new HBox();
         HBox centrin = new HBox();
         BorderPane pane = new BorderPane();
+        pane.getStylesheets().add("thisnuts.css");
         ImageView doc = new ImageView("/Imagenes/docente.png");
         ImageView al = new ImageView("Imagenes/alumno.png");
         ImageView sep = new ImageView("/Imagenes/header.png");
@@ -131,7 +132,7 @@ public class Main extends Application {
         admin.prefHeightProperty().bind(pane.heightProperty().divide(100));
         admin.prefWidthProperty().bind(pane.widthProperty().divide(10.1));
         admin.setGraphic(imgAdmin);
-        admin.getStyleClass().add(".admin"); //////NO ME FUNCIONO LA CLASE
+        admin.getStyleClass().add("admin"); 
         admin.setOnAction(Event ->{
             if (contador == 4) {
 
