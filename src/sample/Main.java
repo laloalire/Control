@@ -24,9 +24,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Main extends Application {
-
+    static int contador=0;
     @Override
     public void start(Stage primaryStage)  {
+
         primaryStage.setTitle("Hello World");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
@@ -125,15 +126,45 @@ public class Main extends Application {
 
         //sep.setFitWidth(0.1);
         //sep.setFitWidth(0.1);
+        ImageView imgAdmin=new ImageView("/imagenes/adm.png");
+        Button admin=new Button();
+        admin.prefHeightProperty().bind(pane.heightProperty().divide(100));
+        admin.prefWidthProperty().bind(pane.widthProperty().divide(10.1));
+        admin.setGraphic(imgAdmin);
+        admin.getStyleClass().add(".admin"); //////NO ME FUNCIONO LA CLASE
+        admin.setOnAction(Event ->{
+            if (contador == 4) {
+
+                TextInputDialog textInputDialog = new TextInputDialog();
+                textInputDialog.setContentText("Autenticación: ");
+                textInputDialog.getDialogPane().setHeaderText("Introducir contraseña para continuar");
+                textInputDialog.setTitle("Contraseña:");
+                Optional<String> pw = textInputDialog.showAndWait();
+                if (!pw.isPresent()) {
+                    return;
+                }
 
 
+                new admin().start(primaryStage);
+
+                contador=0;
+            }else{
+                contador++;
+            }
+        });
+
+
+
+
+        admin.setAlignment(Pos.BOTTOM_RIGHT);
+        pane.setBottom(admin);
         topima.setSpacing(15);
         topima.setStyle("-fx-background-color: #ffffff;");
         topima.getChildren().add(sep);
         //topima.getChildren().add(tec);
         //topima.getChildren().add(estado);
         topima.setAlignment(Pos.CENTER);
-        sep.fitWidthProperty().bind(primaryStage.widthProperty());
+
 
 
         centrin.setAlignment(Pos.CENTER);

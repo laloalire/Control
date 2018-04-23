@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class MysqlConnector {
 
@@ -64,6 +65,18 @@ public class MysqlConnector {
             e.printStackTrace();
         }
         return clases;
+    }
+
+    //funcion para checar el pw del admin
+    public void checarAdmin(String pw){
+        String consulta="select * from admins where pw='"+pw+"'";
+        try{
+            CallableStatement st=connection.prepareCall(consulta);
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void registrarAlumno(String registroID, String numControl){

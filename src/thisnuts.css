@@ -38,6 +38,13 @@
     text-decoration: none;
     overflow: hidden;
 }
+.admin:hover{
+    -fx-background-color: darkorange;
+}
+.admin:pressed{
+    -fx-background-color: darkorchid;
+}
+
 .btnMateria:hover {
     -fx-background-color: #745e8e;
 }
