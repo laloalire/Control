@@ -29,10 +29,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
-public class Materias extends Application{
+public class Materias extends Application {
     private String numEmp;
-    private  int numMaterias;
+    private int numMaterias;
     private Map<String, String> materias;
+
     public Materias(Map<String, String> materias, String numEmp) {
         this.materias = materias;
         this.numMaterias = materias.size();
@@ -41,19 +42,19 @@ public class Materias extends Application{
 
     @Override
     public void start(Stage stage) {
-        AnchorPane anchor= new AnchorPane();
+        AnchorPane anchor = new AnchorPane();
         anchor.getStylesheets().add("thisnuts.css");
-        anchor.setPrefSize(720,480);
+        anchor.setPrefSize(720, 480);
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
         GridPane grid = new GridPane();
-        HBox  base = new HBox();
+        HBox base = new HBox();
         Button atras = new Button("Regresar");
-        ImageView imgAtras=new ImageView("/Imagenes/back.png");
-        Button generarLista=new Button("Listas de asistencia");
-        ImageView imgLista=new ImageView("/Imagenes/checklist.png");
+        ImageView imgAtras = new ImageView("/Imagenes/back.png");
+        Button generarLista = new Button("Listas de asistencia");
+        ImageView imgLista = new ImageView("/Imagenes/checklist.png");
         generarLista.setGraphic(imgLista);
-        StackPane baseDerecha=new StackPane();
+        StackPane baseDerecha = new StackPane();
         generarLista.setOnAction(actionEvent -> generarReporte());
         atras.setGraphic(imgAtras);
         atras.setOnAction(actionEvent -> {
@@ -68,10 +69,10 @@ public class Materias extends Application{
         baseDerecha.getChildren().add(generarLista);
         base.getChildren().add(baseDerecha);
         baseDerecha.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(baseDerecha,Priority.ALWAYS);
-        baseDerecha.setPadding(new Insets(0,30,0,0));
+        HBox.setHgrow(baseDerecha, Priority.ALWAYS);
+        baseDerecha.setPadding(new Insets(0, 30, 0, 0));
         base.setAlignment(Pos.CENTER_LEFT);
-        base.setPadding(new Insets(0, 0, 5,5));
+        base.setPadding(new Insets(0, 0, 5, 5));
         borderPane.setBottom(base);
         AnchorPane.setBottomAnchor(borderPane, 0.0);
         AnchorPane.setLeftAnchor(borderPane, 0.0);
@@ -81,7 +82,7 @@ public class Materias extends Application{
         BorderPane.setAlignment(grid, Pos.CENTER);
         borderPane.setCenter(grid);
         grid.setPadding(new Insets(0, 5, 5, 5));
-        anchor.setPrefSize(stage.getWidth(),stage.getHeight());
+        anchor.setPrefSize(stage.getWidth(), stage.getHeight());
         ImageView sep = new ImageView("/Imagenes/header.png");
         topima.setSpacing(15);
         topima.setStyle("-fx-background-color: #ffffff;");
@@ -97,30 +98,31 @@ public class Materias extends Application{
             System.out.println(grid.getHeight());
         }));
 
-        for(int i = 0; i < numMaterias; i ++){
-                int columna = i % 3;
-                int fila = i / 3;
-                Button btn = new Button(materias.values().toArray()[i] + "");
-                btn.getStyleClass().add("btnMateria");
-                btn.prefHeightProperty().bind(grid.heightProperty().divide(numMaterias < 3 ? 1 : numMaterias /3));
-                btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
-                GridPane.setConstraints(btn, columna, fila);
-                grid.getChildren().add(btn);
-                final int index = i;
-                btn.setOnAction(actionEvent -> {
-                    new Horario(numEmp, materias.keySet().toArray()[index]+"" ).start(new Stage());
-                    stage.hide();
-                });
+        for (int i = 0; i < numMaterias; i++) {
+            int columna = i % 3;
+            int fila = i / 3;
+            Button btn = new Button(materias.values().toArray()[i] + "");
+            btn.getStyleClass().add("btnMateria");
+            btn.prefHeightProperty().bind(grid.heightProperty().divide(numMaterias < 3 ? 1 : numMaterias / 3));
+            btn.prefWidthProperty().bind(grid.widthProperty().divide(numMaterias < 3 ? numMaterias : 3));
+            GridPane.setConstraints(btn, columna, fila);
+            grid.getChildren().add(btn);
+            final int index = i;
+            btn.setOnAction(actionEvent -> {
+                new Horario(numEmp, materias.keySet().toArray()[index] + "").start(new Stage());
+                stage.hide();
+            });
         }
-        Scene scene  = new Scene(anchor);
+        Scene scene = new Scene(anchor);
         stage.setScene(scene);
         stage.show();
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
+
     public void generarReporte() {
         MysqlConnector sql = null;
         try {
@@ -131,20 +133,20 @@ public class Materias extends Application{
         this.fechas[0] = null;
         this.fechas[1] = null;
         String[] fechas = seleccionarLapso();
-        if(fechas[0] == null){
+        if (fechas[0] == null) {
             return;
         }
-       ArrayList<String> registrosId=  sql.getRegistros(numEmp, fechas[1], fechas[0]);
-        if(registrosId.size() == 0){
+        ArrayList<String> registrosId = sql.getRegistros(numEmp, fechas[1], fechas[0]);
+        if (registrosId.size() == 0) {
             new Alert(Alert.AlertType.ERROR, "Ninguna lista para este docente").show();
             return;
         }
 
         Document reporte = new Document(PageSize.LETTER);
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf" ));
-        File file =fileChooser.showSaveDialog(null);
-        if(file==null){
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf"));
+        File file = fileChooser.showSaveDialog(null);
+        if (file == null) {
             return;
         }
         try {
@@ -153,26 +155,24 @@ public class Materias extends Application{
             e.printStackTrace();
         }
         reporte.open();
-        for(String registroId: registrosId) {
+        for (String registroId : registrosId) {
             ArrayList<String> datosLista = sql.getListaDatos(registroId);
             ArrayList<String> listaAlumnos = sql.getListaAlumnos(registroId);
             try {
-                if (file != null) {
-                    PdfPTable header = new PdfPTable(4);
-                    header.setWidthPercentage(100);
-                    header.setWidths(new int[]{1, 1, 1, 1});
-                    header.addCell("Fecha: " + datosLista.get(0));
-                    header.addCell("Asignatura: " + datosLista.get(1));
-                    header.addCell("Carrera: " + datosLista.get(2));
-                    header.addCell("Grupo: " + datosLista.get(3));
-                    reporte.add(header);
+                PdfPTable header = new PdfPTable(4);
+                header.setWidthPercentage(100);
+                header.setWidths(new int[]{1, 1, 1, 1});
+                header.addCell("Fecha: " + datosLista.get(0));
+                header.addCell("Asignatura: " + datosLista.get(1));
+                header.addCell("Carrera: " + datosLista.get(2));
+                header.addCell("Grupo: " + datosLista.get(3));
+                reporte.add(header);
 
-                    for (int i = 0; i < listaAlumnos.size(); i++) {
-                        String alumno = listaAlumnos.get(i);
-                        reporte.add(new Paragraph((1+i)+" - "+alumno));
-                    }
-                    reporte.newPage();
+                for (int i = 0; i < listaAlumnos.size(); i++) {
+                    String alumno = listaAlumnos.get(i);
+                    reporte.add(new Paragraph((1 + i) + " - " + alumno));
                 }
+                reporte.newPage();
 
             } catch (DocumentException e) {
                 e.printStackTrace();
@@ -181,7 +181,8 @@ public class Materias extends Application{
         reporte.close();
     }
 
-    private String[] fechas= {null, null};
+    private String[] fechas = {null, null};
+
     private String[] seleccionarLapso() {
         final DateFormat formatFecha = new SimpleDateFormat("yyyy/MM/dd");
         VBox root = new VBox();
@@ -205,10 +206,10 @@ public class Materias extends Application{
         Stage stage = new Stage();
         stage.setScene(esena);
         btnDia.setOnAction(actionEvent -> modificarVarFecha(formatFecha, stage, Calendar.DAY_OF_MONTH));
-        btnSemana.setOnAction(actionEvent ->  modificarVarFecha(formatFecha, stage, Calendar.WEEK_OF_MONTH));
+        btnSemana.setOnAction(actionEvent -> modificarVarFecha(formatFecha, stage, Calendar.WEEK_OF_MONTH));
         btnMes.setOnAction(actionEvent -> modificarVarFecha(formatFecha, stage, Calendar.MONTH));
         stage.showAndWait();
-        return  fechas;
+        return fechas;
     }
 
     private void modificarVarFecha(DateFormat formatFecha, Stage stage, int lapso) {
