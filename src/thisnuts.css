@@ -10,6 +10,19 @@
     -fx-image-repeat: no-repeat;
     -fx-image-position: center;
 }
+.Teclado{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #8e459cAA;
+    -fx-font-size: 40px;
+    -fx-font-family: "Century Gothic";
+
+    -fx-border-radius: 30px;
+
+}
+.Teclado:hover{
+    -fx-background-color: #d7c929;
+    -fx-text-fill: white;
+}
 
 .btnMateria {
     -fx-background-color: #866ea5;
