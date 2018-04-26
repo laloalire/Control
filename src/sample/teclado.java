@@ -45,7 +45,6 @@ public class teclado extends Application {
         }
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
-         numPad.setStyle("-fx-background-color: blue");
         Button call = new Button("Regresar");
         call.setId("call-button");
         call.setPrefSize(390, 100); //width es el triple de button.setPrefSize
