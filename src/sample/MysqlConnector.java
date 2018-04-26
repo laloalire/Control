@@ -43,8 +43,8 @@ public class MysqlConnector {
         ArrayList<Map<String, String>> clases = new ArrayList<>();
         try {
             CallableStatement st = connection.prepareCall(consulta);
-            rs = st.executeQuery();
-            if(!rs.next()) {
+
+            if(!st.execute()) {
                 //Si no existe es numero de control
                 return null;
             }
