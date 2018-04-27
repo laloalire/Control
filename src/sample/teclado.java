@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -31,8 +33,14 @@ public class teclado extends Application {
                 "7", "8", "9",
                 "Borrar", "0", "Corregir"
             };
+        TextField txtTeclado=new TextField("vegeta777");
+        txtTeclado.getStylesheets().add("thisnuts.css");
+        txtTeclado.getStyleClass().add("txtTeclado");
+        acomodar.setAlignment(Pos.CENTER);
+        acomodar.getChildren().add(txtTeclado);
 
         GridPane numPad = new GridPane();
+
         for (int i = 0; i < 12; i++) {
             Button button = new Button(keys[i]);
             button.getStylesheets().add("thisnuts.css");

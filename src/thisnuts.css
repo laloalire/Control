@@ -31,6 +31,21 @@
     -fx-text-fill: black;
 }
 
+.txtTeclado {
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+    -fx-font-size: 60px;
+    -fx-text-fill: WHITE;
+    -fx-text-alignment: center;
+}
+
+.txtTeclado:focused {
+    -fx-text-alignment: center;
+    -fx-background-color: transparent ;
+}
+
+
 .btnMateria {
     -fx-background-color: #866ea5;
     -fx-border-color: rgba(163, 64, 165, 0.58);
