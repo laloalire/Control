@@ -142,6 +142,7 @@ public class Main extends Application {
                 textInputDialog.setTitle("Contraseña:");
                 Optional<String> pw = textInputDialog.showAndWait();
                 if (!pw.isPresent()) {
+                    contador=0;
                     return;
                 }
 
