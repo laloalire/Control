@@ -51,6 +51,8 @@ public class teclado extends Application {
             numPad.add(button, i % 3, (int) Math.ceil(i / 3));
 
         }
+
+
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
         Button call = new Button("Regresar");
@@ -69,7 +71,18 @@ public class teclado extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        
+
+
     }
+    Boolean banderaBorrar=false;
+    public void checarnums(TextField numeros){
+        if (numeros.getText().length() == 2 && !banderaBorrar) {
+            numeros.setText(numeros.getText()+"CG");
+        }
+    }
+    //METODO PARA QUE SE PONGA EL CG SOLITO BIEN PRRON
 
     public static void main(String[] args) {
         launch(args);
