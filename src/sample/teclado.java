@@ -21,7 +21,7 @@ public class teclado extends Application {
         AnchorPane.setLeftAnchor(root, 0.0);
         AnchorPane.setRightAnchor(root, 0.0);
         anchor.getChildren().add(root);
-        Scene scene = new Scene(anchor, 650, 700);
+        Scene scene = new Scene(anchor, 650, 750);
 
 
         String[] keys =
@@ -47,7 +47,7 @@ public class teclado extends Application {
         numPad.setAlignment(Pos.CENTER);
         Button call = new Button("Regresar");
         call.setId("call-button");
-        call.setPrefSize(600, 100); //width es el triple de button.setPrefSize
+        call.setPrefSize(600, 200); //width es el triple de button.setPrefSize
         //  call.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         numPad.add(call, 0, 4);
 
