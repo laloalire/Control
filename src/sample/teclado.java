@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class teclado extends Application {
+    private boolean alumno;
+
     @Override
     public void start(Stage primaryStage) {
         AnchorPane anchor = new AnchorPane();
@@ -36,6 +38,7 @@ public class teclado extends Application {
         TextField txtTeclado=new TextField("vegeta777");
         txtTeclado.getStylesheets().add("thisnuts.css");
         txtTeclado.getStyleClass().add("txtTeclado");
+        txtTeclado.setAlignment(Pos.CENTER);
         acomodar.setAlignment(Pos.CENTER);
         acomodar.getChildren().add(txtTeclado);
 
@@ -49,6 +52,25 @@ public class teclado extends Application {
             button.setPadding(new Insets(40, 40, 40, 40));
 
             numPad.add(button, i % 3, (int) Math.ceil(i / 3));
+            final String key = keys[i];
+            button.setOnAction(event  -> {
+                String textoActual = txtTeclado.getText();
+                if(key.equals("Corregir")) {
+                    if(textoActual.length() > 0) {
+                        int borrar = 1;
+                        if(textoActual.matches("\\d{2}(CG)")){
+                            borrar = 2;
+                        }
+                        txtTeclado.setText(textoActual.substring(0, textoActual.length() - borrar));
+                    }
+                } else if(key.equals("Borrar")){
+                    txtTeclado.setText("");
+                } else {
+                    textoActual = agregarCGSiSeRequiere(textoActual);
+                    txtTeclado.setText(textoActual + key);
+                    txtTeclado.setText(agregarCGSiSeRequiere(txtTeclado.getText()));
+                }
+            });
 
         }
 
@@ -76,6 +98,14 @@ public class teclado extends Application {
 
 
     }
+
+    private String agregarCGSiSeRequiere(String textoActual) {
+        if(textoActual.matches("\\d{2}") && alumno){
+            textoActual += "CG";
+        }
+        return textoActual;
+    }
+
     Boolean banderaBorrar=false;
     public void checarnums(TextField numeros){
         if (numeros.getText().length() == 2 && !banderaBorrar) {
@@ -87,5 +117,18 @@ public class teclado extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public teclado(boolean alumno) {
+        this.alumno = alumno;
+    }
+
+    /**
+     * <b> No se debe de usar </b>
+     * Este consutructor no se debe de usar desde otra clase pinchis gatos, para eso esta el otro
+     * este nada mas es para pruebas.
+     * */
+   public teclado() {
+       alumno = true;
+   }
 
 }
