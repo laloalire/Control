@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class teclado extends Application {
     private boolean alumno;
@@ -20,6 +21,7 @@ public class teclado extends Application {
     public String mostrarTeclado(Stage padre) {
 
         Stage primaryStage = new Stage();
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.initModality(Modality.WINDOW_MODAL);
         primaryStage.initOwner(padre);
         AnchorPane anchor = new AnchorPane();
