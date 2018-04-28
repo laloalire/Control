@@ -15,6 +15,7 @@ public class teclado extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        mostrarTeclado(new Stage());
     }
     public String mostrarTeclado(Stage padre) {
 
