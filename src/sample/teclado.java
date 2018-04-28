@@ -5,10 +5,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class teclado extends Application {
@@ -16,6 +15,12 @@ public class teclado extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+    }
+    public String mostrarTeclado(Stage padre) {
+
+        Stage primaryStage = new Stage();
+        primaryStage.initModality(Modality.WINDOW_MODAL);
+        primaryStage.initOwner(padre);
         AnchorPane anchor = new AnchorPane();
         anchor.setStyle("-fx-background-color:#5c686d");
         BorderPane root = new BorderPane();
@@ -78,9 +83,16 @@ public class teclado extends Application {
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
         Button btnRegresar = new Button("Regresar");
+        btnRegresar.setOnAction(actionEvent -> {
+            txtTeclado.setText("$");
+            primaryStage.hide();
+        });
         btnRegresar.setId("call-button");
         btnRegresar.setPrefSize(300, 200); //width es el triple de button.setPrefSize
         Button btnContinuar = new Button("Continuar");
+        btnContinuar.setOnAction(actionEvent -> {
+            primaryStage.hide();
+        });
         btnContinuar.setPrefSize(300, 200);
         //  call.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         HBox parteBaja = new HBox();
@@ -97,11 +109,8 @@ public class teclado extends Application {
         acomodar.setSpacing(5);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.show();
-
-        
-
-
+        primaryStage.showAndWait();
+        return txtTeclado.getText();
     }
 
     private String agregarCGSiSeRequiere(String textoActual) {
@@ -135,5 +144,7 @@ public class teclado extends Application {
    public teclado() {
        alumno = true;
    }
+
+
 
 }

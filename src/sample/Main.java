@@ -47,26 +47,20 @@ public class Main extends Application {
 
 
         docente.setOnAction(event -> {
-            TextInputDialog textInputDialog = new TextInputDialog();
-            textInputDialog.setContentText("Número de empleado: ");
-            textInputDialog.getDialogPane().setHeaderText("Introducir o escanear número de empleado");
-            textInputDialog.setTitle("Número de empleado");
+            String numEmp = new teclado(false).mostrarTeclado(primaryStage);
 
-            Optional<String> numEmp = textInputDialog.showAndWait();
-
-
-            if (!numEmp.isPresent()) {
+            if (numEmp.equals("$")) {
                 return;
             }
             try {
-                if (numEmp.get().matches("[0-9]+")) {
+                if (numEmp.matches("[0-9]+")) {
                     MysqlConnector sql = new MysqlConnector();
-                    Map<String, String> materias = sql.pedirMaterias(numEmp.get());
+                    Map<String, String> materias = sql.pedirMaterias(numEmp);
                     sql.shutdown();
                     if (materias.size() == 0) {
                         new Alert(Alert.AlertType.INFORMATION, "Número de empleado no válido").show();
                     } else {
-                        new Materias(materias, numEmp.get()).start(primaryStage);
+                        new Materias(materias, numEmp).start(primaryStage);
                     }
                 } else {
                     new Alert(Alert.AlertType.INFORMATION, "Error: Sólo está permitido introducir números.").show();
@@ -78,26 +72,22 @@ public class Main extends Application {
 
         });
         alumno.setOnAction(event -> {
-            TextInputDialog textInputDialog = new TextInputDialog();
-            textInputDialog.setContentText("Número de control: ");
-            textInputDialog.getDialogPane().setHeaderText("Introducir o escanear tarjeta con número de control");
-            textInputDialog.setTitle("número de control");
-            Optional<String> numCont = textInputDialog.showAndWait();
+            String numCont= new teclado(true).mostrarTeclado(primaryStage);
 
 
-            if (!numCont.isPresent()) {
+            if (numCont.equals("$")) {
                 return;
             }
             try {
-                if (numCont.get().matches("([0-9]{2}(CG)[0-9]{4})")) {
+                if (numCont.matches("([0-9]{2}(CG)[0-9]{4})")) {
                     MysqlConnector sql = new MysqlConnector();
-                    ArrayList<Map<String, String>> clases = sql.revisarAlumno(numCont.get());
+                    ArrayList<Map<String, String>> clases = sql.revisarAlumno(numCont);
                     if (clases == null) {
                         new Alert(Alert.AlertType.ERROR, "Número de control no válido").show();
                     } else if(clases.size() == 0){
                         new Alert(Alert.AlertType.INFORMATION, "No hay ninguna clase en curso" ).show();
                     } else {
-                        new Alumno(clases, numCont.get()).start(primaryStage);
+                        new Alumno(clases, numCont).start(primaryStage);
                     }
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Comprueba tu información").show();
