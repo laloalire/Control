@@ -40,7 +40,7 @@ public class teclado extends Application {
                 "7", "8", "9",
                 "Borrar", "0", "Corregir"
             };
-        TextField txtTeclado=new TextField("vegeta777");
+        TextField txtTeclado=new TextField();
         txtTeclado.getStylesheets().add("thisnuts.css");
         txtTeclado.getStyleClass().add("txtTeclado");
         txtTeclado.setAlignment(Pos.CENTER);
