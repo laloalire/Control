@@ -77,17 +77,22 @@ public class teclado extends Application {
 
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
-        Button call = new Button("Regresar");
-        call.setId("call-button");
-        call.setPrefSize(600, 200); //width es el triple de button.setPrefSize
+        Button btnRegresar = new Button("Regresar");
+        btnRegresar.setId("call-button");
+        btnRegresar.setPrefSize(300, 200); //width es el triple de button.setPrefSize
+        Button btnContinuar = new Button("Continuar");
+        btnContinuar.setPrefSize(300, 200);
         //  call.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        numPad.add(call, 0, 4);
+        HBox parteBaja = new HBox();
+        parteBaja.getChildren().addAll(btnRegresar, btnContinuar);
+        numPad.add(parteBaja, 0, 4);
+        parteBaja.setAlignment(Pos.CENTER);
 
-        GridPane.setColumnSpan(call, 3);
-        GridPane.setHgrow(call, Priority.ALWAYS);
+        GridPane.setColumnSpan(parteBaja, 3);
+        GridPane.setHgrow(parteBaja, Priority.ALWAYS);
 
         root.setCenter(acomodar);
-        acomodar.getChildren().addAll(numPad,call);
+        acomodar.getChildren().addAll(numPad);
         acomodar.setAlignment(Pos.CENTER);
         acomodar.setSpacing(5);
         primaryStage.setResizable(false);
