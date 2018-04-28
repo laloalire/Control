@@ -43,6 +43,8 @@ public class Alumno extends Application{
         });
         atras.setPrefHeight(50);
         atras.getStyleClass().add("btnAtras");
+        ImageView imgAtras = new ImageView("/Imagenes/back.png");
+        atras.setGraphic(imgAtras);
         base.getChildren().add(atras);
         base.setAlignment(Pos.CENTER_LEFT);
         base.setPadding(new Insets(0, 0, 5,5));
