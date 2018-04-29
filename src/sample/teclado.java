@@ -95,6 +95,8 @@ public class teclado extends Application {
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
         Button btnRegresar = new Button("Regresar");
+        btnRegresar.getStylesheets().add("thisnuts.css");
+        btnRegresar.getStyleClass().add("Regresar");
         btnRegresar.setOnAction(actionEvent -> {
             txtTeclado.setText("$");
             primaryStage.hide();
@@ -102,6 +104,8 @@ public class teclado extends Application {
         btnRegresar.setId("call-button");
         btnRegresar.setPrefSize(300, 200); //width es el triple de button.setPrefSize
         Button btnContinuar = new Button("Continuar");
+        btnContinuar.getStylesheets().add("thisnuts.css");
+        btnContinuar.getStyleClass().add("Continuar");
         btnContinuar.setOnAction(actionEvent -> {
             primaryStage.hide();
         });

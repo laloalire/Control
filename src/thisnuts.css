@@ -19,6 +19,16 @@
     -fx-border-radius: 30px;
 
 }
+.Continuar{
+    -fx-text-fill:white ;
+    -fx-background-color: #6fd776;
+    -fx-font-weight: bold;
+}
+.Regresar{
+    -fx-text-fill:white ;
+    -fx-background-color: #d75252;
+    -fx-font-weight: bold;
+}
 .Teclado:hover{
     -fx-background-color: #d7c929;
     -fx-text-fill: white;
