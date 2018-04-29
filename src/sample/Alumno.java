@@ -86,7 +86,7 @@ public class Alumno extends Application{
                 try {
                     MysqlConnector sql = new MysqlConnector();
                     sql.registrarAlumno(clases.get(index).get("Rg_id"), numControl);
-                    new Alert(Alert.AlertType.INFORMATION, "Te haz registrado correctamene").showAndWait();
+                    new Alert(Alert.AlertType.INFORMATION, "Te has registrado correctamene").showAndWait();
                     new Main().start(new Stage());
                     stage.hide();
                 } catch (Exception e) {
