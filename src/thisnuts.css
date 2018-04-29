@@ -21,13 +21,17 @@
 }
 .Continuar{
     -fx-text-fill:white ;
-    -fx-background-color: #6fd776;
+    -fx-background-color: #91d79d;
     -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 18px;
 }
 .Regresar{
     -fx-text-fill:white ;
-    -fx-background-color: #d75252;
+    -fx-background-color: #d36a66;
     -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 18px;
 }
 .Teclado:hover{
     -fx-background-color: #d7c929;
