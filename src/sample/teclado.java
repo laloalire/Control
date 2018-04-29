@@ -6,10 +6,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+
 
 public class teclado extends Application {
     private boolean alumno;
@@ -34,14 +37,15 @@ public class teclado extends Application {
         AnchorPane.setRightAnchor(root, 0.0);
         anchor.getChildren().add(root);
         Scene scene = new Scene(anchor, 650, 750);
-
+        ImageView imgBackspace=new ImageView("/Imagenes/backspace.png");
+        ImageView limpiar=new ImageView("/Imagenes/clean.png");
 
         String[] keys =
             {
                 "1", "2", "3",
                 "4", "5", "6",
                 "7", "8", "9",
-                "Borrar", "0", "Corregir"
+                "Limpiar", "0", "Corregir"
             };
         TextField txtTeclado=new TextField();
         txtTeclado.getStylesheets().add("thisnuts.css");
@@ -58,6 +62,11 @@ public class teclado extends Application {
             button.getStyleClass().add("Teclado");
             button.setPrefSize(200, 200);
             button.setPadding(new Insets(40, 40, 40, 40));
+            if(keys[i].equals("Corregir")){
+                button.setGraphic(imgBackspace);
+            } else if (keys[i].equals("Limpiar")) {
+                button.setGraphic(limpiar);
+            }
 
             numPad.add(button, i % 3, (int) Math.ceil(i / 3));
             final String key = keys[i];
@@ -71,7 +80,7 @@ public class teclado extends Application {
                         }
                         txtTeclado.setText(textoActual.substring(0, textoActual.length() - borrar));
                     }
-                } else if(key.equals("Borrar")){
+                } else if(key.equals("Limpiar")){
                     txtTeclado.setText("");
                 } else {
                     textoActual = agregarCGSiSeRequiere(textoActual);

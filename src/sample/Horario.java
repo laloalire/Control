@@ -26,6 +26,7 @@ public class Horario extends Application {
     private ArrayList<String> aulasDisponibles;
     private String numempleado;
     private String idmateria;
+    public static int horaActual;
 
     @Override
     public void start(Stage primaryStage) {
@@ -74,6 +75,7 @@ public class Horario extends Application {
             int nuevaCant = Integer.parseInt(lblHora.getText().split(":")[0]) + 1;
             if (nuevaCant == 13) {
                 nuevaCant = 1;
+
             }
             lblHora.setText(nuevaCant + ":00");
         });
@@ -124,9 +126,12 @@ public class Horario extends Application {
                 lblMeridiano.setText("PM");
             }
         });
+        //IFS DE VALIDACION DE HORARIO PARA QUE NO PUEDAN METER HORAS DE MADRUGADA
+
+
 
         btnMenos.setOnAction(Event->{
-            if(lblMeridiano.getText()=="PM"){
+            if(lblMeridiano.getText()=="PM" && hour>7){
                 lblMeridiano.setText("AM");
             }
         });
