@@ -95,7 +95,7 @@ public class admin extends Application {
 
 
         btnpdf.setOnAction(Event ->{
-
+            generarReporteSalones();
         });
 
     }
@@ -128,11 +128,11 @@ public class admin extends Application {
         }
         reporte.open();
         for (String registroId : registrosId) {
-            ArrayList<String> datosLista = sql.getListaDatos(registroId);
-            ArrayList<String> listaAlumnos = sql.getListaAlumnos(registroId);
+
+            ArrayList<String> listaRegistros = sql.getEntradas();
             try {
-                PdfPTable header = new PdfPTable(4);
-                header.setWidthPercentage(100);
+                PdfPTable header = new PdfPTable(11);
+                header.setWidthPercentage(50);
                 header.setWidths(new int[]{1, 1, 1, 1});
                 header.addCell("Aula ");
                 header.addCell("Fecha ");
@@ -148,9 +148,9 @@ public class admin extends Application {
 
                 reporte.add(header);
 
-                for (int i = 0; i < listaAlumnos.size(); i++) {
-                    String alumno = listaAlumnos.get(i);
-                    reporte.add(new Paragraph((1 + i) + " - " + alumno));
+                for (int i = 0; i < listaRegistros.size(); i++) {
+
+                    reporte.add(new Paragraph((1 + i) + " - " ));
                 }
                 reporte.newPage();
 

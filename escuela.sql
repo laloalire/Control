@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 27, 2018 at 01:46 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 30, 2018 at 06:44 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,6 +35,11 @@ from registros,asignaturas,carreras,alumnos where
 registros.rg_id=reg_idd and asignaturas.asig_id=registros.asig_id and carreras.carr_id=asignaturas.carrera and
 alumnos.ncont=(select ncont from registroalumno,registros where registroalumno.reg_id=registros.rg_id limit 1);
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfRegistros` ()  begin
+select registros.aula_id,registros.fecha,registros.entrada,registros.salida,docentes.nomb,docentes.ap,docentes.am, asignaturas.nomb, carreras.nombre,registros.sexoh,registros.sexom
+from registros, asignaturas,carreras,docentes where registros.num_emp=docentes.num_emp and asignaturas.carrera=carreras.carr_id and registros.asig_id=asignaturas.asig_id;
+end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getLista` (`reg_idd` NUMERIC)  begin
 select concat (alumnos.ap ," ",alumnos.am, " ",alumnos.Nombre) 'Nombre' from alumnos, registroalumno where registroalumno.ncont=alumnos.ncont and registroalumno.reg_id=reg_idd;
@@ -209,7 +214,9 @@ INSERT INTO `registroalumno` (`reg_id`, `ncont`) VALUES
 (1, '15CG0110'),
 (1, '15CG0146'),
 (1, '15CG0192'),
-(1, '15CG0199');
+(1, '15CG0199'),
+(2, '15CG0146'),
+(3, '15CG0146');
 
 --
 -- Triggers `registroalumno`
@@ -251,7 +258,9 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
-(1, '11', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
+(1, '13', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1'),
+(2, '2', '0', '2018-04-29', '14:00:00', '15:00:00', 101, '4', 12345, NULL),
+(3, '1', '0', '2018-04-30', '10:00:00', '11:00:00', 101, '4', 12345, NULL);
 
 --
 -- Indexes for dumped tables
@@ -315,7 +324,7 @@ ALTER TABLE `registros`
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
