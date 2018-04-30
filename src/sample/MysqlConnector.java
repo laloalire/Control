@@ -128,7 +128,7 @@ public class MysqlConnector {
     }
 
     public ArrayList<String> getEntradas() {
-        String consulta = "select * from registros";
+        String consulta = "call getInfRegistros";
         return  consultaAArrayList(consulta);
     }
 

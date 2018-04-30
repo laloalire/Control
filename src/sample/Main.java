@@ -136,7 +136,7 @@ public class Main extends Application {
                     return;
                 }else{
 
-                if(pw.toString().equals("admin") ) {
+                if(pw.get().equals("admin") ) {
                     new admin().start(primaryStage);
                 }else{
                     new Alert(Alert.AlertType.ERROR,"La clave es incorrecta.").show();

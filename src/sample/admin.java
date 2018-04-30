@@ -139,6 +139,8 @@ public class admin extends Application {
                 header.addCell("Entrada " );
                 header.addCell("Salida " );
                 header.addCell("Nombre del docente ");
+                header.addCell("Apellido Paterno");
+                header.addCell("Apellido Materno");
                 header.addCell("Asignatura ");
                 header.addCell("Carrera ");
                 header.addCell("Cant. de Hombres ");
