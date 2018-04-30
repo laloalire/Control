@@ -1,0 +1,11 @@
+INSERT INTO `alumnos` (`ncont`, `carr_id`, `sexo`, `grupo`, `Ap`, `Am`, `Nombre`) VALUES
+('15CG0011', '1', 'M', '6AM', 'PEÑA', 'RAMIREZ', 'YADIRA'),
+('15CG0012', '1', 'H', '6AM', 'SILVEIRA', 'HINOJOS', 'CARLOS ALBERTO'),
+('15CG0013', '1', 'M', '6AM', 'VENEGAS', 'VALDEZ', 'MARIANA'),
+('15CG0034', '1', 'H', '6AM', 'ACOSTA', 'TREVIZO', 'RUBEN ARMANDO'),
+('15CG0035', '1', 'H', '6AM', 'ALONSO', 'ARAGON', 'BRENDA JOANNA'),
+('15CG0036', '1', 'M', '6AM', 'ESTALA', 'ENRIQUEZ', 'PAUL ALBERTO'),
+('15CG0110', '1', 'm', '6AM', 'GARCIA', 'RAMIREZ', 'GERARDO'),
+('15CG0146', '1', 'H', '6AM', 'CHAPARRO', 'ALIRE', 'EDUARDO'),
+('15CG0192', '2', 'm', '6AM', 'ALVAREZ', 'MARTINEZ', 'MIGUEL ANGEL'),
+('15CG0199', '1', 'h', '6AM', 'ESCOBEDO', 'SANCHEZ', 'COSME OMAR');
