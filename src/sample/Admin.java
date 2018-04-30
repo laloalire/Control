@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class admin extends Application {
+public class Admin extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Panel de Administrador");
         AnchorPane anchor = new AnchorPane();

@@ -1,13 +1,7 @@
 package sample;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLBoundOperation;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -47,7 +41,7 @@ public class Main extends Application {
 
 
         docente.setOnAction(event -> {
-            String numEmp = new teclado(false).mostrarTeclado(primaryStage);
+            String numEmp = new Teclado(false).mostrarTeclado(primaryStage);
 
             if (numEmp.equals("$")) {
                 return;
@@ -72,7 +66,7 @@ public class Main extends Application {
 
         });
         alumno.setOnAction(event -> {
-            String numCont= new teclado(true).mostrarTeclado(primaryStage);
+            String numCont= new Teclado(true).mostrarTeclado(primaryStage);
 
 
             if (numCont.equals("$")) {
@@ -122,7 +116,7 @@ public class Main extends Application {
         admin.prefHeightProperty().bind(pane.heightProperty().divide(100));
         admin.prefWidthProperty().bind(pane.widthProperty().divide(10.1));
         admin.setGraphic(imgAdmin);
-        admin.getStyleClass().add("admin"); 
+        admin.getStyleClass().add("Admin");
         admin.setOnAction(Event ->{
             if (contador == 4) {
 
@@ -136,8 +130,8 @@ public class Main extends Application {
                     return;
                 }else{
 
-                if(pw.get().equals("admin") ) {
-                    new admin().start(primaryStage);
+                if(pw.get().equals("Admin") ) {
+                    new Admin().start(primaryStage);
                 }else{
                     new Alert(Alert.AlertType.ERROR,"La clave es incorrecta.").show();
                 }

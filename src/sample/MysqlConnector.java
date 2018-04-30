@@ -67,7 +67,7 @@ public class MysqlConnector {
         return clases;
     }
 
-    //funcion para checar el pw del admin
+    //funcion para checar el pw del Admin
     public void checarAdmin(String pw){
         String consulta="select * from admins where pw='"+pw+"'";
         try{

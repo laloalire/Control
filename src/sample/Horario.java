@@ -116,7 +116,8 @@ public class Horario extends Application {
         Horario.setTextFill(Color.WHITE);
         Horario.setFont(new Font("Arial",20));
         Calendar calendario = Calendar.getInstance();
-        int hour = calendario.get(Calendar.HOUR);
+        int hour_con_zero = calendario.get(Calendar.HOUR);
+        final int hour = hour_con_zero == 0 ? 12 : hour_con_zero;
         lblHora.setText(hour + ":00");
         Button btnMenos = new Button();
         Button btnMas = new Button();
@@ -163,7 +164,7 @@ public class Horario extends Application {
                 int cantidadHoras = Integer.parseInt(lblCantidadHoras.getText());
                 if (mostrarAlerta(lblHora, lblMeridiano, btnAula, cantidadHoras)) return;
                 int inicio = Integer.parseInt(lblHora.getText().split(":")[0]);
-                if(lblMeridiano.getText().equals("PM")){
+                if(lblMeridiano.getText().equals("PM") && inicio < 12){
                     inicio += 12;
                 }
                 int fin = inicio + cantidadHoras;

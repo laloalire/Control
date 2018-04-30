@@ -14,7 +14,7 @@ import javafx.stage.StageStyle;
 
 
 
-public class teclado extends Application {
+public class Teclado extends Application {
     private boolean alumno;
 
     @Override
@@ -148,7 +148,7 @@ public class teclado extends Application {
         launch(args);
     }
 
-    public teclado(boolean alumno) {
+    public Teclado(boolean alumno) {
         this.alumno = alumno;
     }
 
@@ -157,7 +157,7 @@ public class teclado extends Application {
      * Este consutructor no se debe de usar desde otra clase pinchis gatos, para eso esta el otro
      * este nada mas es para pruebas.
      * */
-   public teclado() {
+   public Teclado() {
        alumno = true;
    }
 
