@@ -49,7 +49,7 @@ public class Horario extends Application {
         ImageView Horamenos = new ImageView("/Imagenes/Hora2.png");
 
 
-        anchor.setPrefSize(720, 480);
+        anchor.setPrefSize(1366, 768);
 
 
         // Imagen Arriba

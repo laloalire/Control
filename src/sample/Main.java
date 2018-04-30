@@ -31,7 +31,7 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
-        anchor.setPrefSize(720, 480);
+        anchor.setPrefSize(1366, 768);
         HBox topima = new HBox();
         HBox centrin = new HBox();
         BorderPane pane = new BorderPane();
@@ -134,11 +134,15 @@ public class Main extends Application {
                 if (!pw.isPresent()) {
                     contador=0;
                     return;
+                }else{
+
+                if(pw.toString().equals("admin") ) {
+                    new admin().start(primaryStage);
+                }else{
+                    new Alert(Alert.AlertType.ERROR,"La clave es incorrecta.").show();
                 }
 
-
-                new admin().start(primaryStage);
-
+                }
                 contador=0;
             }else{
                 contador++;

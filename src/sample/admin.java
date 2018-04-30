@@ -1,14 +1,26 @@
 package sample;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 public class admin extends Application {
     public void start(Stage primaryStage) {
@@ -25,6 +37,15 @@ public class admin extends Application {
         ImageView tec = new ImageView("/Imagenes/tec.png");
         ImageView estado = new ImageView("Imagenes/estado.png");
         sep.setPreserveRatio(true);
+        topima.setSpacing(15);
+        topima.setStyle("-fx-background-color: #ffffff;");
+        topima.getChildren().add(sep);
+        //topima.getChildren().add(tec);
+        //topima.getChildren().add(estado);
+        topima.setAlignment(Pos.CENTER);
+
+
+
         Button btnver = new Button();
         Button btnpdf = new Button();
 
@@ -57,12 +78,7 @@ public class admin extends Application {
 
 
 
-        topima.setSpacing(15);
-        topima.setStyle("-fx-background-color: #ffffff;");
-        topima.getChildren().add(sep);
-        //topima.getChildren().add(tec);
-        //topima.getChildren().add(estado);
-        topima.setAlignment(Pos.CENTER);
+
 
 
 
@@ -76,7 +92,75 @@ public class admin extends Application {
 
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
+
+
+        btnpdf.setOnAction(Event ->{
+
+        });
+
     }
+
+    public void generarReporteSalones() {
+        MysqlConnector sql = null;
+        try {
+            sql = new MysqlConnector();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> registrosId = sql.getEntradas();
+        if (registrosId.size() == 0) {
+            new Alert(Alert.AlertType.ERROR, "No existe ninguna entrada registrada").show();
+            return;
+        }
+
+        Document reporte = new Document(PageSize.LETTER);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf"));
+        File file = fileChooser.showSaveDialog(null);
+        if (file == null) {
+            return;
+        }
+        try {
+            PdfWriter.getInstance(reporte, new FileOutputStream(file));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        reporte.open();
+        for (String registroId : registrosId) {
+            ArrayList<String> datosLista = sql.getListaDatos(registroId);
+            ArrayList<String> listaAlumnos = sql.getListaAlumnos(registroId);
+            try {
+                PdfPTable header = new PdfPTable(4);
+                header.setWidthPercentage(100);
+                header.setWidths(new int[]{1, 1, 1, 1});
+                header.addCell("Aula ");
+                header.addCell("Fecha ");
+                header.addCell("Entrada " );
+                header.addCell("Salida " );
+                header.addCell("Nombre del docente ");
+                header.addCell("Asignatura ");
+                header.addCell("Carrera ");
+                header.addCell("Cant. de Hombres ");
+                header.addCell("Cant. de Mujeres ");
+
+                reporte.add(header);
+
+                for (int i = 0; i < listaAlumnos.size(); i++) {
+                    String alumno = listaAlumnos.get(i);
+                    reporte.add(new Paragraph((1 + i) + " - " + alumno));
+                }
+                reporte.newPage();
+
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
+        }
+        reporte.close();
+    }
+
+
+
     public static void main(String[] args) {
         launch(args);
     }

@@ -31,7 +31,7 @@ public class Alumno extends Application{
     public void start(Stage stage) {
         AnchorPane anchor= new AnchorPane();
         anchor.getStylesheets().add("thisnuts.css");
-        anchor.setPrefSize(720,480);
+        anchor.setPrefSize(1366,768);
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
         GridPane grid = new GridPane();
