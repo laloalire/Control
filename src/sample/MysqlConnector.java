@@ -127,9 +127,25 @@ public class MysqlConnector {
         return  consultaAArrayList(consulta);
     }
 
-    public ArrayList<String> getEntradas() {
+    public ArrayList<ArrayList<String>> getEntradas() {
         String consulta = "call getInfRegistros";
-        return  consultaAArrayList(consulta);
+        ResultSet rs;
+        ArrayList<ArrayList<String>> registros = new ArrayList<>();
+        try {
+           CallableStatement st = connection.prepareCall(consulta);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                ArrayList<String> registro = new ArrayList<>();
+                for(int i = 0; i < 11; i++){
+                    registro.add( rs.getString(i+1));
+                }
+                registros.add(registro);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return registros;
+
     }
 
 

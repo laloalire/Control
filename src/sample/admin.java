@@ -1,9 +1,6 @@
 package sample;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Application;
@@ -45,12 +42,8 @@ public class admin extends Application {
         topima.setAlignment(Pos.CENTER);
 
 
-
         Button btnver = new Button();
         Button btnpdf = new Button();
-
-
-
 
 
         btnver.prefHeightProperty().bind(pane.heightProperty().divide(2));
@@ -74,14 +67,6 @@ public class admin extends Application {
         //sep.setFitWidth(0.1);
 
 
-
-
-
-
-
-
-
-
         centrin.setAlignment(Pos.CENTER);
         centrin.setSpacing(15);
         pane.setCenter(centrin);
@@ -94,7 +79,7 @@ public class admin extends Application {
         primaryStage.show();
 
 
-        btnpdf.setOnAction(Event ->{
+        btnpdf.setOnAction(Event -> {
             generarReporteSalones();
         });
 
@@ -108,8 +93,8 @@ public class admin extends Application {
             e.printStackTrace();
         }
 
-        ArrayList<String> registrosId = sql.getEntradas();
-        if (registrosId.size() == 0) {
+        ArrayList<ArrayList<String>> listaRegistros = sql.getEntradas();
+        if (listaRegistros.size() == 0) {
             new Alert(Alert.AlertType.ERROR, "No existe ninguna entrada registrada").show();
             return;
         }
@@ -127,40 +112,42 @@ public class admin extends Application {
             e.printStackTrace();
         }
         reporte.open();
-        for (String registroId : registrosId) {
 
-            ArrayList<String> listaRegistros = sql.getEntradas();
-            try {
-                PdfPTable header = new PdfPTable(11);
-                header.setWidthPercentage(50);
-                header.setWidths(new int[]{1, 1, 1, 1});
-                header.addCell("Aula ");
-                header.addCell("Fecha ");
-                header.addCell("Entrada " );
-                header.addCell("Salida " );
-                header.addCell("Nombre del docente ");
-                header.addCell("Apellido Paterno");
-                header.addCell("Apellido Materno");
-                header.addCell("Asignatura ");
-                header.addCell("Carrera ");
-                header.addCell("Cant. de Hombres ");
-                header.addCell("Cant. de Mujeres ");
+        try {
+            PdfPTable header = new PdfPTable(11);
+            header.setWidthPercentage(100);
+            header.setWidths(new int[]{1, 2, 2, 2, 2, 2, 2, 3, 3, 1, 1});
+            header.addCell(new Phrase(new Chunk("Aula", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Fecha", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Entrada", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Salida", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Nombre del docente", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Apellido Paterno", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Apellido Materno", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Asignatura", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Carrera", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Cant. de Hombres ", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
+            header.addCell(new Phrase(new Chunk("Cant. de Mujeres ", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD))));
 
-                reporte.add(header);
 
-                for (int i = 0; i < listaRegistros.size(); i++) {
 
-                    reporte.add(new Paragraph((1 + i) + " - " ));
+            for (int i = 0; i < listaRegistros.size(); i++) {
+                ArrayList<String> registro = listaRegistros.get(i);
+                for(int j = 0; j < registro.size(); j++){
+                    Phrase phrase = new Phrase();
+                    phrase.add(new Chunk(registro.get(j), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+                    header.addCell(phrase);
+
                 }
-                reporte.newPage();
-
-            } catch (DocumentException e) {
-                e.printStackTrace();
             }
+            reporte.add(header);
+            reporte.newPage();
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
         }
         reporte.close();
     }
-
 
 
     public static void main(String[] args) {
