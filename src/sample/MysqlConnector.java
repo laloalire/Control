@@ -68,15 +68,20 @@ public class MysqlConnector {
     }
 
     //funcion para checar el pw del Admin
-    public void checarAdmin(String pw){
-        String consulta="select * from admins where pw='"+pw+"'";
+    public boolean checarAdmin(String pw){
+        String consulta="call checkarAdmin(?)";
         try{
             CallableStatement st=connection.prepareCall(consulta);
-
+            st.setString(1, pw);
+            ResultSet rs = st.executeQuery();
+            rs.first();
+             int resultado = rs.getInt(1);
+             return  resultado > 0;
 
         }catch (Exception e){
             e.printStackTrace();
         }
+        return  false;
     }
 
     public void registrarAlumno(String registroID, String numControl){

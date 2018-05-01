@@ -18,9 +18,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Main extends Application {
-    static int contador=0;
+    static int contador = 0;
+
     @Override
-    public void start(Stage primaryStage)  {
+    public void start(Stage primaryStage) {
 
         primaryStage.setTitle("Hello World");
         AnchorPane anchor = new AnchorPane();
@@ -66,7 +67,7 @@ public class Main extends Application {
 
         });
         alumno.setOnAction(event -> {
-            String numCont= new Teclado(true).mostrarTeclado(primaryStage);
+            String numCont = new Teclado(true).mostrarTeclado(primaryStage);
 
 
             if (numCont.equals("$")) {
@@ -78,8 +79,8 @@ public class Main extends Application {
                     ArrayList<Map<String, String>> clases = sql.revisarAlumno(numCont);
                     if (clases == null) {
                         new Alert(Alert.AlertType.ERROR, "Número de control no válido").show();
-                    } else if(clases.size() == 0){
-                        new Alert(Alert.AlertType.INFORMATION, "No hay ninguna clase en curso" ).show();
+                    } else if (clases.size() == 0) {
+                        new Alert(Alert.AlertType.INFORMATION, "No hay ninguna clase en curso").show();
                     } else {
                         new Alumno(clases, numCont).start(primaryStage);
                     }
@@ -111,13 +112,13 @@ public class Main extends Application {
 
         //sep.setFitWidth(0.1);
         //sep.setFitWidth(0.1);
-        ImageView imgAdmin=new ImageView("/Imagenes/adm.png");
-        Button admin=new Button();
+        ImageView imgAdmin = new ImageView("/Imagenes/adm.png");
+        Button admin = new Button();
         admin.prefHeightProperty().bind(pane.heightProperty().divide(100));
         admin.prefWidthProperty().bind(pane.widthProperty().divide(10.1));
         admin.setGraphic(imgAdmin);
         admin.getStyleClass().add("Admin");
-        admin.setOnAction(Event ->{
+        admin.setOnAction(Event -> {
             if (contador == 4) {
 
                 TextInputDialog textInputDialog = new TextInputDialog();
@@ -126,24 +127,25 @@ public class Main extends Application {
                 textInputDialog.setTitle("Contraseña:");
                 Optional<String> pw = textInputDialog.showAndWait();
                 if (!pw.isPresent()) {
-                    contador=0;
+                    contador = 0;
                     return;
-                }else{
-
-                if(pw.get().equals("Admin") ) {
+                }
+                MysqlConnector sql = null;
+                try {
+                    sql = new MysqlConnector();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                if (sql.checarAdmin(pw.get())) {
                     new Admin().start(primaryStage);
-                }else{
-                    new Alert(Alert.AlertType.ERROR,"La clave es incorrecta.").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "La clave es incorrecta.").show();
                 }
-
-                }
-                contador=0;
-            }else{
+                contador = 0;
+            } else {
                 contador++;
             }
         });
-
-
 
 
         admin.setAlignment(Pos.BOTTOM_RIGHT);
@@ -154,7 +156,6 @@ public class Main extends Application {
         //topima.getChildren().add(tec);
         //topima.getChildren().add(estado);
         topima.setAlignment(Pos.CENTER);
-
 
 
         centrin.setAlignment(Pos.CENTER);

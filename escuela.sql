@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 30, 2018 at 06:44 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Host: localhost
+-- Generation Time: May 01, 2018 at 04:10 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,6 +26,12 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cambiarPass` (IN `contra` VARCHAR(128))  NO SQL
+update admins set pass = SHA2('admin', 512)$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkarAdmin` (IN `contra` VARCHAR(128))  NO SQL
+select count(idadmin) from admins where pass = sha2(contra, 512)$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `clasesEnCurso` ()  NO SQL
 select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from registros, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and registros.num_emp = D.num_emp and registros.asig_id = A.asig_id$$
 
@@ -49,6 +55,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getRegistros` (IN `num_empp` INT, I
 select rg_id from registros where num_emp=num_empp and fecha between fechainicio and fechafin;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarAdmin` (IN `contra` VARCHAR(128))  NO SQL
+insert into admins(pass) values(SHA2(contra, '512'))$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `materiasDocente` (IN `num` INT)  BEGIN
 	select asig_id, nomb nombre from asignaturas where num_emp = num;
 END$$
@@ -65,6 +74,24 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarAlumno` (IN `numcontrol` VAR
  end$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `idadmin` int(11) NOT NULL,
+  `pass` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`idadmin`, `pass`) VALUES
+(1, 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec');
 
 -- --------------------------------------------------------
 
@@ -214,9 +241,7 @@ INSERT INTO `registroalumno` (`reg_id`, `ncont`) VALUES
 (1, '15CG0110'),
 (1, '15CG0146'),
 (1, '15CG0192'),
-(1, '15CG0199'),
-(2, '15CG0146'),
-(3, '15CG0146');
+(1, '15CG0199');
 
 --
 -- Triggers `registroalumno`
@@ -258,13 +283,17 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
-(1, '13', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1'),
-(2, '2', '0', '2018-04-29', '14:00:00', '15:00:00', 101, '4', 12345, NULL),
-(3, '1', '0', '2018-04-30', '10:00:00', '11:00:00', 101, '4', 12345, NULL);
+(1, '16', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`idadmin`);
 
 --
 -- Indexes for table `alumnos`
@@ -321,10 +350,16 @@ ALTER TABLE `registros`
 --
 
 --
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `idadmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
