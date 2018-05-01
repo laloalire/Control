@@ -24,9 +24,18 @@ public class Admin extends Application {
         primaryStage.setTitle("Panel de Administrador");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
-        anchor.setPrefSize(720, 480);
+        anchor.setPrefSize(1366, 768);
         HBox topima = new HBox();
         HBox centrin = new HBox();
+        Button atras = new Button("Regresar");
+        atras.setOnAction(actionEvent -> {
+            new Main().start(new Stage());
+            primaryStage.hide();
+        });
+        atras.setPrefHeight(50);
+        atras.getStyleClass().add("btnAtras");
+        ImageView imgAtras = new ImageView("/Imagenes/back.png");
+        atras.setGraphic(imgAtras);
         BorderPane pane = new BorderPane();
         ImageView pdf = new ImageView("/Imagenes/pdf.png");
         ImageView ver = new ImageView("Imagenes/eye.png");
@@ -43,6 +52,10 @@ public class Admin extends Application {
 
 
         Button btnver = new Button();
+        btnver.setOnAction(event -> {
+            new Alert(Alert.AlertType.INFORMATION,"Característica en desarrollo.").show();
+        });
+
         Button btnpdf = new Button();
 
 
@@ -54,7 +67,7 @@ public class Admin extends Application {
         anchor.getChildren().add(topin);
         pane.setTop(topin);
         topin.getChildren().add(topima);
-
+        centrin.getChildren().add(atras);
         AnchorPane.setTopAnchor(pane, 0.0);
         AnchorPane.setBottomAnchor(pane, 0.0);
         AnchorPane.setRightAnchor(pane, 0.0);
@@ -147,6 +160,9 @@ public class Admin extends Application {
             e.printStackTrace();
         }
         reporte.close();
+        new Alert(Alert.AlertType.INFORMATION,"El documento se ha generado correctamente").show();
+
+
     }
 
 
