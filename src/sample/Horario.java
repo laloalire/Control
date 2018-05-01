@@ -168,6 +168,7 @@ public class Horario extends Application {
                 }
                 int fin = inicio + cantidadHoras;
                 insertarRegistro(primaryStage, aula, inicio, fin);
+                EnviarDatosArduino.enviarDatos(aula.substring(aula.length()-1));
             });
             btnAula.prefHeightProperty().bind(Border.heightProperty().divide(7));
             btnAula.prefWidthProperty().bind(Border.widthProperty().divide(7));
