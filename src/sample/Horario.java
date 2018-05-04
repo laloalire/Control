@@ -2,8 +2,6 @@ package sample;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -169,7 +167,7 @@ public class Horario extends Application {
                 }
                 int fin = inicio + cantidadHoras;
                 insertarRegistro(primaryStage, aula, inicio, fin);
-                EnviarDatosArduino.enviarDatos(aula.substring(aula.length()-1));
+                ArduinoManager.enviarDatos(aula.substring(aula.length()-1));
             });
             btnAula.prefHeightProperty().bind(Border.heightProperty().divide(7));
             btnAula.prefWidthProperty().bind(Border.widthProperty().divide(7));
