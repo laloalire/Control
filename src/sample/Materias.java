@@ -7,10 +7,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -28,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Optional;
 
 public class Materias extends Application {
     private String numEmp;
@@ -109,6 +107,25 @@ public class Materias extends Application {
             grid.getChildren().add(btn);
             final int index = i;
             btn.setOnAction(actionEvent -> {
+                MysqlConnector sql =null;
+                try {
+                    sql = new MysqlConnector();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                ArrayList<String> clasesActuales = sql.revisarDocenteEnClase(numEmp);
+                if(!clasesActuales.isEmpty()) {
+                    ButtonType ok = new ButtonType("Eliminar clase y datos");
+                    ButtonType no = new ButtonType("No, conservar clase");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, clasesActuales.get(3)+"\n"+"Entrada: "+clasesActuales.get(1)+"\n"+"Salida: "+clasesActuales.get(2)+"\n"+"¿Desea eliminar esta clase y todos los datos?", ok, no);
+                    alert.setHeaderText("Ya tiene una clase registrada a esta hora.");
+                    Optional<ButtonType> boton= alert.showAndWait();
+                    if(boton.isPresent() && boton.get() == ok) {
+                            sql.eliminarRegistro(clasesActuales.get(0));
+                    }else{
+                        return;
+                    }
+                }
                 new Horario(numEmp, materias.keySet().toArray()[index] + "").start(new Stage());
                 stage.hide();
             });

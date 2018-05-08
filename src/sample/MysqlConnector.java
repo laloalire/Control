@@ -166,6 +166,38 @@ public class MysqlConnector {
 
     }
 
+    public ArrayList<String>  revisarDocenteEnClase(String numEmp){
+        String consulta = "call revisarDocenteEnClase ("+numEmp+")";
+        ArrayList<String> resultado = new ArrayList<>();
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            ResultSet rs = st.executeQuery();
+            agregarElementoArray(resultado, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultado;
+    }
+    public void eliminarRegistro(String registroId){
+        String consulta = "call eliminarRegistro("+registroId+")";
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void agregarElementoArray(ArrayList<String> resultado, ResultSet rs) throws SQLException {
+        while (rs.next()){
+            resultado.add(rs.getString(1));
+            resultado.add(rs.getString(2));
+            resultado.add(rs.getString(3));
+            resultado.add(rs.getString(4));
+        }
+    }
+
 
     public ArrayList<String> getListaDatos(String idRegistro) {
         String consulta = "call getDatosLista("+idRegistro+")";
@@ -173,12 +205,7 @@ public class MysqlConnector {
         try {
             CallableStatement st = connection.prepareCall(consulta);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                respuesta.add(rs.getString(1));
-                respuesta.add(rs.getString(2));
-                respuesta.add(rs.getString(3));
-                respuesta.add(rs.getString(4));
-            }
+            agregarElementoArray(respuesta, rs);
         } catch (Exception e) {
             e.printStackTrace();
         }
