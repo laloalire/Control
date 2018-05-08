@@ -85,8 +85,13 @@ public class Alumno extends Application{
             btn.setOnAction(event -> {
                 try {
                     MysqlConnector sql = new MysqlConnector();
-                    sql.registrarAlumno(clases.get(index).get("Rg_id"), numControl);
-                    new Alert(Alert.AlertType.INFORMATION, "Te has registrado correctamene").showAndWait();
+                    String regid=clases.get(index).get("Rg_id");
+                    if(!sql.alumnoEnClase(numControl, regid)) {
+                        sql.registrarAlumno(regid, numControl);
+                        new Alert(Alert.AlertType.INFORMATION, "Te has registrado correctamene").showAndWait();
+                    }else {
+                        new Alert(Alert.AlertType.ERROR, "Ya te habias registrado en esta clase anteriormente").showAndWait();
+                    }
                     new Main().start(new Stage());
                     stage.hide();
                 } catch (Exception e) {

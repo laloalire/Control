@@ -83,6 +83,19 @@ public class MysqlConnector {
         }
         return  false;
     }
+    public boolean alumnoEnClase(String numControl, String registroId){
+        String consulta = "Select count(*) from registroalumno where reg_id='"+registroId+"' and ncont='"+numControl+"'";
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            int count =rs.getInt(1);
+            return count != 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
     public void registrarAlumno(String registroID, String numControl){
         String consulta = "call registrarAlumno("+registroID+", '"+numControl+"')";
