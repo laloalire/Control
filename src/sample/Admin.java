@@ -75,6 +75,8 @@ public class Admin extends Application {
         pane.setStyle("-fx-background-color: #745e8e;");
         btnver.setGraphic(ver);
         btnpdf.setGraphic(pdf);
+        btnver.setText("VER REGISTROS");
+        btnpdf.setText("EXPORTAR REGISTROS");
 
         //sep.setFitWidth(0.1);
         //sep.setFitWidth(0.1);
