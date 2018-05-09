@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 01, 2018 at 04:10 PM
+-- Generation Time: May 09, 2018 at 01:55 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.4
 
@@ -34,6 +34,11 @@ select count(idadmin) from admins where pass = sha2(contra, 512)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `clasesEnCurso` ()  NO SQL
 select Rg_id, CONCAT(D.nomb," ", D.ap," ", D.am) maestro, A.nomb asignatura, entrada, salida , aula_id aula from registros, docentes D, asignaturas A where fecha = CURDATE() and entrada < CURTIME() and salida > CURTIME() and registros.num_emp = D.num_emp and registros.asig_id = A.asig_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarRegistro` (`regid` INT)  BEGIN
+delete from registroalumno where reg_Id = regid;
+delete from registros where Rg_id = regid;
+end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getDatosLista` (IN `reg_idd` INT)  BEGIN
 select registros.fecha, asignaturas.nomb, carreras.nombre,grupo
@@ -72,6 +77,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarAlumno` (IN `numcontrol` VAR
  SELECT 1;
  end IF;
  end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarAlumnoEnClase` (IN `numCont` VARCHAR(8))  NO SQL
+select reg_id, nomb, entrada, salida, aula_id from registroalumno ra, registros r, asignaturas a where ra.reg_id = r.Rg_id and r.asig_id = a.asig_id and fecha = CURRENT_DATE and entrada < now() and salida > now() and ra.ncont = numCont$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `revisarDocenteEnClase` (IN `numero` INT)  NO SQL
+select Rg_id, salida, entrada, nomb from registros, asignaturas where registros.num_emp = numero and fecha = CURRENT_DATE and entrada < now() and salida > now() and asignaturas.asig_id = registros.asig_id$$
 
 DELIMITER ;
 
@@ -247,13 +258,25 @@ INSERT INTO `registroalumno` (`reg_id`, `ncont`) VALUES
 -- Triggers `registroalumno`
 --
 DELIMITER $$
+CREATE TRIGGER `deleteRegistroAlumno` BEFORE DELETE ON `registroalumno` FOR EACH ROW begin 
+declare genero varchar(8);
+SELECT sexo from alumnos where alumnos.ncont = OLD.ncont into genero;
+if(genero = 'h') then 
+update registros set sexoh = sexoh - 1 where Rg_id = OLD.reg_id;
+elseif(genero = 'm') then 
+update registros set sexom = sexom -1 where Rg_id = OLD.reg_id; 
+end IF;
+end
+$$
+DELIMITER ;
+DELIMITER $$
 CREATE TRIGGER `insertRegistroAlumnos` AFTER INSERT ON `registroalumno` FOR EACH ROW begin 
 declare genero varchar(8);
 SELECT sexo from alumnos where alumnos.ncont = NEW.ncont into genero;
 if(genero = 'h') then 
-update registros set sexoh = sexoh + 1;
+update registros set sexoh = sexoh + 1 where Rg_id = NEW.reg_id;
 elseif(genero = 'm') then 
-update registros set sexom = sexom +1;
+update registros set sexom = sexom +1 where Rg_id = NEW.reg_id;
 end IF;
 end
 $$
@@ -283,7 +306,9 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`Rg_id`, `sexoh`, `sexom`, `fecha`, `entrada`, `salida`, `aula_id`, `asig_id`, `num_emp`, `carr_id`) VALUES
-(1, '16', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1');
+(1, '23', '5', '2018-04-12', '11:00:00', '22:38:00', 101, '0', 12347, '1'),
+(2, '7', '0', '2018-05-08', '08:00:00', '09:00:00', 101, '3', 12347, NULL),
+(10, '0', '0', '2018-05-08', '19:00:00', '20:00:00', 102, '4', 12345, NULL);
 
 --
 -- Indexes for dumped tables
@@ -359,7 +384,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Rg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
