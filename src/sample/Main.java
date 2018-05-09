@@ -22,7 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        ArduinoManager.iniciarArduino();
         primaryStage.setTitle("Hello World");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
