@@ -6,15 +6,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Executable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 public class Alumno extends Application{
     private  int numClases;
@@ -86,7 +86,20 @@ public class Alumno extends Application{
                 try {
                     MysqlConnector sql = new MysqlConnector();
                     String regid=clases.get(index).get("Rg_id");
-                    if(!sql.alumnoEnClase(numControl, regid)) {
+                    if(!sql.alumnoYaRegistrado(numControl, regid)) {
+                        ArrayList<String> claseActual = sql.alumnoEnClase(numControl);
+                        if(!claseActual.isEmpty()){
+                            ButtonType ok = new ButtonType("Salir de esa clase");
+                            ButtonType no = new ButtonType("No, conservar clase");
+                            Alert alert = new Alert(Alert.AlertType.ERROR, claseActual.get(1)+"\n"+"Entrada: "+claseActual.get(2)+"\n"+"Salida: "+claseActual.get(3)+"\n"+"¿Deseas salir de la clase en la que estas registrado e ingresar a esta?", ok, no);
+                            alert.setHeaderText("Ya estas registrado en una clase a esta hora");
+                            Optional<ButtonType> boton= alert.showAndWait();
+                            if(boton.isPresent() && boton.get() == ok) {
+                                sql.eliminarAsistencia(claseActual.get(0), numControl);
+                            }else{
+                                return;
+                            }
+                        }
                         sql.registrarAlumno(regid, numControl);
                         new Alert(Alert.AlertType.INFORMATION, "Te has registrado correctamene").showAndWait();
                     }else {

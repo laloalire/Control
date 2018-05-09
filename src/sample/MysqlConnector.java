@@ -83,7 +83,7 @@ public class MysqlConnector {
         }
         return  false;
     }
-    public boolean alumnoEnClase(String numControl, String registroId){
+    public boolean alumnoYaRegistrado(String numControl, String registroId){
         String consulta = "Select count(*) from registroalumno where reg_id='"+registroId+"' and ncont='"+numControl+"'";
         try {
             CallableStatement st = connection.prepareCall(consulta);
@@ -95,6 +95,18 @@ public class MysqlConnector {
             e.printStackTrace();
         }
         return true;
+    }
+    public  ArrayList<String> alumnoEnClase(String numControl){
+        ArrayList<String> resultado = new ArrayList<>();
+        String consulta = "call revisarAlumnoEnClase('"+numControl+"')";
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            ResultSet rs = st.executeQuery();
+            agregarElementoArray(resultado, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultado;
     }
 
     public void registrarAlumno(String registroID, String numControl){
@@ -229,6 +241,16 @@ public class MysqlConnector {
     public ArrayList<String> getListaAlumnos(String idRegistro) {
         String consulta = "call getLista("+idRegistro+")";
         return  consultaAArrayList(consulta);
+    }
+
+    public void eliminarAsistencia(String idregistro, String numControl) {
+        String consulta = "delete from registroalumno where reg_id ="+idregistro +" and ncont='"+numControl+"'";
+        try {
+            CallableStatement st = connection.prepareCall(consulta);
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 
