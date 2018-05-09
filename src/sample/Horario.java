@@ -138,7 +138,8 @@ public class Horario extends Application {
         });
         btnMenos.setGraphic(Horamas);
         btnMas.setGraphic(Horamenos);
-        lblMeridiano.setText("AM");
+        String ampm = calendario.get(Calendar.AM_PM) == 0 ? "AM" : "PM";
+        lblMeridiano.setText(ampm);
         lblMeridiano.setAlignment(Pos.CENTER);
         lblMeridiano.setStyle("-fx-background-color: #ffffff;");
         lblMeridiano.setFont(new Font("Arial", 100));

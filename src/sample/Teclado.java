@@ -64,8 +64,10 @@ public class Teclado extends Application {
             button.setPadding(new Insets(40, 40, 40, 40));
             if(keys[i].equals("Corregir")){
                 button.setGraphic(imgBackspace);
+                button.setText("");
             } else if (keys[i].equals("Limpiar")) {
                 button.setGraphic(limpiar);
+                button.setText("");
             }
 
             numPad.add(button, i % 3, (int) Math.ceil(i / 3));
