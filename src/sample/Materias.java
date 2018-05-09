@@ -126,7 +126,13 @@ public class Materias extends Application {
                         return;
                     }
                 }
-                new Horario(numEmp, materias.keySet().toArray()[index] + "").start(new Stage());
+
+                Horario horario = new Horario(numEmp, materias.keySet().toArray()[index] + "");
+                if(horario.aulasDisponibles.isEmpty()){
+                    new Alert(Alert.AlertType.INFORMATION, "No hay aulas disponibles en este momento").showAndWait();
+                    return;
+                }
+                horario.start(new Stage());
                 stage.hide();
             });
         }

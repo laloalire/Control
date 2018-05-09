@@ -23,10 +23,9 @@ import java.util.Optional;
 
 
 public class Horario extends Application {
-    private ArrayList<String> aulasDisponibles;
+    public ArrayList<String> aulasDisponibles;
     private String numempleado;
     private String idmateria;
-    public static int horaActual;
 
     @Override
     public void start(Stage primaryStage) {
