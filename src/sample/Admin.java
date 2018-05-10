@@ -53,7 +53,8 @@ public class Admin extends Application {
 
         Button btnver = new Button();
         btnver.setOnAction(event -> {
-            new Alert(Alert.AlertType.INFORMATION,"Característica en desarrollo.").show();
+            new Registros().start(new Stage());
+            primaryStage.hide();
         });
 
         Button btnpdf = new Button();
