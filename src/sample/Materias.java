@@ -66,6 +66,7 @@ public class Materias extends Application {
         base.getChildren().add(atras);
         baseDerecha.getChildren().add(generarLista);
         base.getChildren().add(baseDerecha);
+        topima.setAlignment(Pos.CENTER);
         baseDerecha.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(baseDerecha, Priority.ALWAYS);
         baseDerecha.setPadding(new Insets(0, 30, 0, 0));
@@ -89,7 +90,7 @@ public class Materias extends Application {
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
-        topima.setAlignment(Pos.CENTER);
+
         sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
         grid.heightProperty().addListener((observable -> {

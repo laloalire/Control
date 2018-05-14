@@ -230,11 +230,19 @@ public class Horario extends Application {
 
         lblMeridiano.prefHeightProperty().bind(Border.heightProperty().divide(7));
         lblMeridiano.prefWidthProperty().bind(Border.widthProperty().divide(7));
-
-
+        Button atras = new Button("Regresar");
+        ImageView imgAtras = new ImageView("/Imagenes/back.png");
+        atras.setGraphic(imgAtras);
+        atras.setOnAction(actionEvent -> {
+            new Main().start(new Stage());
+            primaryStage.hide();
+        });
+        atras.setPrefHeight(50);
+        atras.getStyleClass().add("btnAtras");
         todo.getChildren().addAll(Salones);
         todo.setAlignment(Pos.CENTER);
         todo.setSpacing(50);
+        todo.getChildren().add(atras);
         anchor.getChildren().add(Border);
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
