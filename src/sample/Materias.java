@@ -127,7 +127,7 @@ public class Materias extends Application {
                     }
                 }
 
-                Horario horario = new Horario(numEmp, materias.keySet().toArray()[index] + "");
+                Horario horario = new Horario(numEmp, materias.keySet().toArray()[index] + "", materias);
                 if(horario.aulasDisponibles.isEmpty()){
                     new Alert(Alert.AlertType.INFORMATION, "No hay aulas disponibles en este momento").showAndWait();
                     return;
