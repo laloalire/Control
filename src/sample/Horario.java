@@ -57,7 +57,6 @@ public class Horario extends Application {
         Border.setStyle("-fx-background-color: #745e8e;");
         Ima.getChildren().add(Imagen);
         Imagen.setPreserveRatio(true);
-        Imagen.fitWidthProperty().bind(primaryStage.widthProperty());
 
 
         //Hora

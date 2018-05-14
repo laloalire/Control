@@ -91,7 +91,6 @@ public class Materias extends Application {
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
 
-        sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
         grid.heightProperty().addListener((observable -> {
             System.out.println(grid.getHeight());
