@@ -67,7 +67,6 @@ public class Alumno extends Application{
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
         topima.setAlignment(Pos.CENTER);
-        sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
         for(int i = 0; i < numClases; i ++){
             int columna = i % 3;
