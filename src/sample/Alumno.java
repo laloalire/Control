@@ -31,6 +31,7 @@ public class Alumno extends Application{
     @Override
     public void start(Stage stage) {
         stage.getIcons().add(new Image("/Imagenes/icono.png"));
+        stage.setTitle("Fastware Key - Materias en curso");
         AnchorPane anchor= new AnchorPane();
         anchor.getStylesheets().add("thisnuts.css");
         anchor.setPrefSize(1366,768);

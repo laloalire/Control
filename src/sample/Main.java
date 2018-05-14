@@ -24,7 +24,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setTitle("Fastware Key");
+        primaryStage.setTitle("Fastware Key - Principal");
         primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();

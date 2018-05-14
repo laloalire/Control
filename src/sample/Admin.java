@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class Admin extends Application {
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Panel de Administrador");
+        primaryStage.setTitle("Fastware Key - Panel de Administrador");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
         anchor.setPrefSize(1366, 768);

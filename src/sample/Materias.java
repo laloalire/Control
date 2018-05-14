@@ -42,6 +42,7 @@ public class Materias extends Application {
     public void start(Stage stage) {
         AnchorPane anchor = new AnchorPane();
         anchor.getStylesheets().add("thisnuts.css");
+        stage.setTitle("Fastware Key - Materias");
         anchor.setPrefSize(1366, 768);
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();

@@ -32,7 +32,7 @@ public class Horario extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Horario - Fastware Key");
+        primaryStage.setTitle("Fastware Key - Horario");
         primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         AnchorPane anchor = new AnchorPane();
         BorderPane Border = new BorderPane();
