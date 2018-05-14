@@ -80,6 +80,8 @@ public class Registros extends Application {
         carrera.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(8) + ""));
         TableColumn<ArrayList, String> cantidadHombres = new TableColumn<>("Cant. de Hombres");
         cantidadHombres.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(9) + ""));
+        cantidadHombres.setPrefWidth(50);
+        cantidadHombres.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> cantidadMujeres = new TableColumn<>("Cant. de Mujeres");
         cantidadMujeres.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(10) + ""));
         tabla.getColumns().addAll(aula, fecha,entrada,salida,nombre,apellidoPaterno, apellidoMaterno,asignatura, carrera, cantidadHombres, cantidadMujeres);
