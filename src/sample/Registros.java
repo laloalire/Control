@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -26,6 +27,8 @@ public class Registros extends Application {
         TableView tableView = new TableView();
         setUpTabla(tableView);
         llenarTabla(tableView);
+        stage.setTitle("Fastware Key - Visualizar Registros");
+        stage.getIcons().add(new Image("/Imagenes/icono.png"));
         Label titulo = new Label("Registro");
         titulo.setStyle("-fx-font-size: 30px");
         Button atras = new Button("Regresar");
