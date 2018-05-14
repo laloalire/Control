@@ -1,16 +1,22 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 
 
 
@@ -47,7 +53,16 @@ public class Teclado extends Application {
                 "7", "8", "9",
                 "Limpiar", "0", "Corregir"
             };
+
+
+
+
         TextField txtTeclado=new TextField();
+
+
+
+
+
         txtTeclado.getStylesheets().add("thisnuts.css");
         txtTeclado.getStyleClass().add("txtTeclado");
         txtTeclado.setAlignment(Pos.CENTER);
@@ -93,7 +108,7 @@ public class Teclado extends Application {
 
         }
 
-
+    
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
         Button btnRegresar = new Button("Regresar");
@@ -117,7 +132,17 @@ public class Teclado extends Application {
         parteBaja.getChildren().addAll(btnRegresar, btnContinuar);
         numPad.add(parteBaja, 0, 4);
         parteBaja.setAlignment(Pos.CENTER);
-
+        txtTeclado.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            @Override
+            public void handle(KeyEvent ke)
+            {
+                if (ke.getCode().equals(KeyCode.ENTER))
+                {
+                    btnContinuar.fire();
+                }
+            }
+        });
         GridPane.setColumnSpan(parteBaja, 3);
         GridPane.setHgrow(parteBaja, Priority.ALWAYS);
 
@@ -137,6 +162,7 @@ public class Teclado extends Application {
         }
         return textoActual;
     }
+
 
     Boolean banderaBorrar=false;
     public void checarnums(TextField numeros){
