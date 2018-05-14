@@ -108,7 +108,7 @@ public class Teclado extends Application {
 
         }
 
-    
+
         numPad.setPadding(new Insets(10, 10, 10, 10));
         numPad.setAlignment(Pos.CENTER);
         Button btnRegresar = new Button("Regresar");
@@ -140,6 +140,8 @@ public class Teclado extends Application {
                 if (ke.getCode().equals(KeyCode.ENTER))
                 {
                     btnContinuar.fire();
+                } else if (ke.getCode().equals(KeyCode.ESCAPE)) {
+                    btnRegresar.fire();
                 }
             }
         });
