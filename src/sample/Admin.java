@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -32,6 +33,7 @@ public class Admin extends Application {
             new Main().start(new Stage());
             primaryStage.hide();
         });
+        primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         atras.setPrefHeight(50);
         atras.getStyleClass().add("btnAtras");
         ImageView imgAtras = new ImageView("/Imagenes/back.png");

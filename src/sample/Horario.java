@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -31,7 +32,8 @@ public class Horario extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Horario");
+        primaryStage.setTitle("Horario - Fastware Key");
+        primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         AnchorPane anchor = new AnchorPane();
         BorderPane Border = new BorderPane();
         HBox todo = new HBox();

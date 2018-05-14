@@ -62,7 +62,7 @@ public class Materias extends Application {
         atras.setPrefHeight(50);
         atras.getStyleClass().add("btnAtras");
         generarLista.setPrefHeight(50);
-
+        stage.getIcons().add(new Image("/Imagenes/icono.png"));
         base.getChildren().add(atras);
         baseDerecha.getChildren().add(generarLista);
         base.getChildren().add(baseDerecha);
