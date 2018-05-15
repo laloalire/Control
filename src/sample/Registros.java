@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 public class Registros extends Application {
 
+
     @Override
-
     public void start(Stage stage) {
-
+        TableView tableView = new TableView();
         setUpTabla(tableView);
         llenarTabla(tableView);
         stage.setTitle("Fastware Key - Visualizar Registros");
@@ -58,17 +58,27 @@ public class Registros extends Application {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-
+        ObservableList<TableColumn> tableColumns = tableView.getColumns();
+        tableColumns.get(0).setPrefWidth(tableView.getWidth()/11); // aula
+        tableColumns.get(1).setPrefWidth(tableView.getWidth()/11); // Fecha
+        tableColumns.get(2).setPrefWidth(tableView.getWidth()/11); // Entrada
+        tableColumns.get(3).setPrefWidth(tableView.getWidth()/11); // Salida
+        tableColumns.get(4).setPrefWidth(tableView.getWidth()/11); // Nombre docente
+        tableColumns.get(5).setPrefWidth(tableView.getWidth()/11); // Apellido paterno
+        tableColumns.get(6).setPrefWidth(tableView.getWidth()/11); // Apellido materno
+        tableColumns.get(7).setPrefWidth(tableView.getWidth()/11); // asignatura
+        tableColumns.get(8).setPrefWidth(tableView.getWidth()/11); // carrera
+        tableColumns.get(9).setPrefWidth(tableView.getWidth()/11); // cant hombres
+        tableColumns.get(10).setPrefWidth(tableView.getWidth()/11); // cant mujeres
     }
-    public static TableView tableView = new TableView();
+
+
 
     public void setUpTabla(TableView tabla) {
         TableColumn<ArrayList, String> aula = new TableColumn<>("Aula");
         aula.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(0) + ""));
         aula.setPrefWidth(80);
         aula.setStyle("-fx-alignment: center;");
-
-
         TableColumn<ArrayList, String> fecha = new TableColumn<>("Fecha");
         fecha.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(1) + ""));
         fecha.setStyle("-fx-alignment: center;");
