@@ -23,8 +23,9 @@ import java.util.ArrayList;
 public class Registros extends Application {
 
     @Override
+
     public void start(Stage stage) {
-        TableView tableView = new TableView();
+
         setUpTabla(tableView);
         llenarTabla(tableView);
         stage.setTitle("Fastware Key - Visualizar Registros");
@@ -52,43 +53,57 @@ public class Registros extends Application {
         AnchorPane.setTopAnchor(borderPane, 0d);
         AnchorPane.setRightAnchor(borderPane, 0d);
         AnchorPane.setLeftAnchor(borderPane, 0d);
-        Scene scene = new Scene(root, 1366, 768);
+        Scene scene = new Scene(root);
+        
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
-        for(Object column : tableView.getColumns()) {
-            TableColumn columna1 = (TableColumn) column;
-            columna1.setPrefWidth(tableView.getWidth() / (11));
-        }
-    }
 
+    }
+    public static TableView tableView = new TableView();
 
     public void setUpTabla(TableView tabla) {
         TableColumn<ArrayList, String> aula = new TableColumn<>("Aula");
         aula.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(0) + ""));
+        aula.setPrefWidth(80);
+        aula.setStyle("-fx-alignment: center;");
+
+
         TableColumn<ArrayList, String> fecha = new TableColumn<>("Fecha");
         fecha.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(1) + ""));
+        fecha.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> entrada = new TableColumn<>("Entrada");
         entrada.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(2) + ""));
+        entrada.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> salida = new TableColumn<>("Salida");
         salida.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(3) + ""));
+        salida.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> nombre = new TableColumn<>("Nombre Docente");
         nombre.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(4) + ""));
+        nombre.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> apellidoPaterno = new TableColumn<>("Apellido Paterno");
         apellidoPaterno.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(5) + ""));
+        apellidoPaterno.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> apellidoMaterno = new TableColumn<>("Apellido Materno");
         apellidoMaterno.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(6) + ""));
+        apellidoMaterno.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> asignatura = new TableColumn<>("Asignatura");
         asignatura.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(7) + ""));
+        asignatura.setStyle("-fx-alignment: center;");
         TableColumn<ArrayList, String> carrera = new TableColumn<>("Carrera");
         carrera.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(8) + ""));
+        carrera.setStyle("-fx-alignment: center;");
+
         TableColumn<ArrayList, String> cantidadHombres = new TableColumn<>("Cant. de Hombres");
         cantidadHombres.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(9) + ""));
-        cantidadHombres.setPrefWidth(50);
+        cantidadHombres.setPrefWidth(80);
         cantidadHombres.setStyle("-fx-alignment: center;");
+
         TableColumn<ArrayList, String> cantidadMujeres = new TableColumn<>("Cant. de Mujeres");
         cantidadMujeres.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(10) + ""));
+        cantidadMujeres.setStyle("-fx-alignment: center;");
         tabla.getColumns().addAll(aula, fecha,entrada,salida,nombre,apellidoPaterno, apellidoMaterno,asignatura, carrera, cantidadHombres, cantidadMujeres);
-
+        tabla.setPrefWidth(1000);
 
 
     }
@@ -108,5 +123,6 @@ public class Registros extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
     }
 }
