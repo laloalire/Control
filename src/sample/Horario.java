@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -17,17 +18,20 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.Optional;
 
 
 public class Horario extends Application {
+    private  Map<String,String> materias;
     public ArrayList<String> aulasDisponibles;
     private String numempleado;
     private String idmateria;
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Horario");
+        primaryStage.setTitle("Fastware Key - Horario");
+        primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         AnchorPane anchor = new AnchorPane();
         BorderPane Border = new BorderPane();
         HBox todo = new HBox();
@@ -36,7 +40,7 @@ public class Horario extends Application {
         HBox Timepo = new HBox();
         VBox Tiempo2 = new VBox();
         VBox Salones = new VBox();
-        AnchorPane Ima = new AnchorPane();
+        HBox Ima = new HBox();
         ImageView Imagen = new ImageView("/Imagenes/header.png");
         ImageView FlechaArriba = new ImageView("/Imagenes/UP.png");
         ImageView FlechaAbajo = new ImageView("/Imagenes/DOWN.png");
@@ -54,8 +58,8 @@ public class Horario extends Application {
         Border.setTop(Ima);
         Border.setStyle("-fx-background-color: #745e8e;");
         Ima.getChildren().add(Imagen);
+        Ima.setAlignment(Pos.CENTER);
         Imagen.setPreserveRatio(true);
-        Imagen.fitWidthProperty().bind(primaryStage.widthProperty());
 
 
         //Hora
@@ -228,11 +232,18 @@ public class Horario extends Application {
 
         lblMeridiano.prefHeightProperty().bind(Border.heightProperty().divide(7));
         lblMeridiano.prefWidthProperty().bind(Border.widthProperty().divide(7));
-
-
+        Button atras = new Button("Regresar");
+        ImageView imgAtras = new ImageView("/Imagenes/back.png");
+        atras.setGraphic(imgAtras);
+        atras.setOnAction(actionEvent -> {
+            new Materias(materias,numempleado).start(primaryStage);
+        });
+        atras.setPrefHeight(50);
+        atras.getStyleClass().add("btnAtras");
         todo.getChildren().addAll(Salones);
         todo.setAlignment(Pos.CENTER);
         todo.setSpacing(50);
+        todo.getChildren().add(atras);
         anchor.getChildren().add(Border);
         primaryStage.setScene(new Scene(anchor));
         primaryStage.show();
@@ -268,9 +279,10 @@ public class Horario extends Application {
         return !result.isPresent() || result.get() != ButtonType.OK;
     }
 
-    public Horario(String numempleado, String idmateria) {
+    public Horario(String numempleado, String idmateria, Map<String, String> materias) {
         this.numempleado = numempleado;
         this.idmateria = idmateria;
+        this.materias = materias;
         MysqlConnector sql = null;
         try {
             sql = new MysqlConnector();
@@ -284,8 +296,6 @@ public class Horario extends Application {
     }
 
     public static void main(String[] args) {
-        Platform.runLater(() -> new Horario("s", "s").start(new Stage()));
-
-
+        Platform.runLater(() -> new Horario("s", "s", null).start(new Stage()));
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
@@ -29,6 +30,8 @@ public class Alumno extends Application{
 
     @Override
     public void start(Stage stage) {
+        stage.getIcons().add(new Image("/Imagenes/icono.png"));
+        stage.setTitle("Fastware Key - Materias en curso");
         AnchorPane anchor= new AnchorPane();
         anchor.getStylesheets().add("thisnuts.css");
         anchor.setPrefSize(1366,768);
@@ -67,7 +70,6 @@ public class Alumno extends Application{
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
         topima.setAlignment(Pos.CENTER);
-        sep.fitWidthProperty().bind(stage.widthProperty());
         sep.setPreserveRatio(true);
         for(int i = 0; i < numClases; i ++){
             int columna = i % 3;

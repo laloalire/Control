@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class Admin extends Application {
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Panel de Administrador");
+        primaryStage.setTitle("Fastware Key - Panel de Administrador");
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
         anchor.setPrefSize(1366, 768);
@@ -32,6 +33,7 @@ public class Admin extends Application {
             new Main().start(new Stage());
             primaryStage.hide();
         });
+        primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         atras.setPrefHeight(50);
         atras.getStyleClass().add("btnAtras");
         ImageView imgAtras = new ImageView("/Imagenes/back.png");
@@ -53,7 +55,8 @@ public class Admin extends Application {
 
         Button btnver = new Button();
         btnver.setOnAction(event -> {
-            new Alert(Alert.AlertType.INFORMATION,"Característica en desarrollo.").show();
+            new Registros().start(new Stage());
+            primaryStage.hide();
         });
 
         Button btnpdf = new Button();

@@ -42,6 +42,7 @@ public class Materias extends Application {
     public void start(Stage stage) {
         AnchorPane anchor = new AnchorPane();
         anchor.getStylesheets().add("thisnuts.css");
+        stage.setTitle("Fastware Key - Materias");
         anchor.setPrefSize(1366, 768);
         BorderPane borderPane = new BorderPane();
         HBox topima = new HBox();
@@ -62,10 +63,11 @@ public class Materias extends Application {
         atras.setPrefHeight(50);
         atras.getStyleClass().add("btnAtras");
         generarLista.setPrefHeight(50);
-
+        stage.getIcons().add(new Image("/Imagenes/icono.png"));
         base.getChildren().add(atras);
         baseDerecha.getChildren().add(generarLista);
         base.getChildren().add(baseDerecha);
+        topima.setAlignment(Pos.CENTER);
         baseDerecha.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(baseDerecha, Priority.ALWAYS);
         baseDerecha.setPadding(new Insets(0, 30, 0, 0));
@@ -89,8 +91,7 @@ public class Materias extends Application {
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
-        topima.setAlignment(Pos.CENTER);
-        sep.fitWidthProperty().bind(stage.widthProperty());
+
         sep.setPreserveRatio(true);
         grid.heightProperty().addListener((observable -> {
             System.out.println(grid.getHeight());
@@ -127,7 +128,7 @@ public class Materias extends Application {
                     }
                 }
 
-                Horario horario = new Horario(numEmp, materias.keySet().toArray()[index] + "");
+                Horario horario = new Horario(numEmp, materias.keySet().toArray()[index] + "", materias);
                 if(horario.aulasDisponibles.isEmpty()){
                     new Alert(Alert.AlertType.INFORMATION, "No hay aulas disponibles en este momento").showAndWait();
                     return;
