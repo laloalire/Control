@@ -27,6 +27,7 @@ public class Horario extends Application {
     public ArrayList<String> aulasDisponibles;
     private String numempleado;
     private String idmateria;
+    public static SerialArduino serial = new SerialArduino();
 
     @Override
     public void start(Stage primaryStage) {
@@ -171,7 +172,7 @@ public class Horario extends Application {
                 }
                 int fin = inicio + cantidadHoras;
                 insertarRegistro(primaryStage, aula, inicio, fin);
-                ArduinoManager.enviarDatos(aula.substring(aula.length()-1));
+                serial.escribirSerial(aula.substring(aula.length()-1));
             });
             btnAula.prefHeightProperty().bind(Border.heightProperty().divide(7));
             btnAula.prefWidthProperty().bind(Border.widthProperty().divide(7));

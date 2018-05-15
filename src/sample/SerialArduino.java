@@ -15,7 +15,12 @@ public class SerialArduino implements SerialPortEventListener {
     SerialPort serialPort;
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
-            "COM4", // Este puerto lo cambias dependiendo donde conectes el arduino
+            "COM1",
+            "COM2",
+            "COM3",
+            "COM4",
+            "COM5",
+            "COM6",
     };
     /**
      * A BufferedReader which will be fed by a InputStreamReader

@@ -23,10 +23,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ArduinoManager.iniciarArduino();
+        Horario.serial.initialize();
         primaryStage.setTitle("Hello World");
         primaryStage.setTitle("Fastware Key - Principal");
-        primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));=
+        primaryStage.getIcons().add(new Image("/Imagenes/icono.png"));
         AnchorPane anchor = new AnchorPane();
         AnchorPane topin = new AnchorPane();
         anchor.setPrefSize(1366, 768);
